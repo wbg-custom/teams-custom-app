@@ -1,9 +1,12 @@
+//import "../../../common/css/Tab.css";
 import React from "react";
 
 export default function Privacy() {
   return (
-    <div>
-      <h1>Privacy Statement</h1>
+    <div class="welcome page">
+        <div className="narrow page-padding">
+            <h1>Privacy Statement.</h1>
+        </div>
     </div>
   );
 }

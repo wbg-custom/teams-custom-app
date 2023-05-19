@@ -1,9 +1,11 @@
 import '../../../common/css/App.css';
+import '../../../common/css/Tab.css';
 import { Provider, teamsTheme, Loader } from "@fluentui/react-northstar";//,Loader
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import { Navigate } from "react-router-dom";
 import { useTeamsFx } from "@microsoft/teamsfx-react";
 //import { useTeams } from "@microsoft/teamsfx-react";
+import Home from "./Home";
 import Privacy from "./Privacy";
 import TermsOfUse from "./TermsOfUse";
 import NotFound from "./NotFound";
@@ -50,7 +52,7 @@ export default function App() {
             <Loader style={{ margin: 100 }} />
           ) : (
             <Routes>
-              <Route exact path="/" element={<PersonalTabHome/>} />
+              <Route exact path="/" element={<Home/>} />
               <Route exact path="/privacy" element={<Privacy/>} />
               <Route exact path="/termsofuse" element={<TermsOfUse/>} />
               <Route exact path="/notfound" element={<NotFound/>} />

@@ -1,11 +1,12 @@
-//import "../../../common/css/Tab.css";
+import "../../../common/css/Tab.css";
 import React from "react";
 
-export default function NotFound() {
+
+export default function Home() {
   return (
     <div class="welcome page">
         <div className="narrow page-padding">
-            <h1>404 Page not found.</h1>
+            <h1>Welcome to Teams Custom App.</h1>
         </div>
     </div>
   );
