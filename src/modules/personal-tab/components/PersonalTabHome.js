@@ -1,28 +1,41 @@
 import "../../../common/css/Tab.css";
-
 import { Loader } from "@fluentui/react-northstar";
-import { useContext, useState } from "react";
+import { useContext, useState } from "react"; //, useState
 import { useData } from "@microsoft/teamsfx-react";
-import { TeamsFxContext } from "../../../common/models/context";
-import TestAPIs from "../../../common/constants/TestApis";
-//import Scopes from "../../../common/constants/Scopes";
+import { app, Context } from "@microsoft/teams-js";
 
-function PersonalTabHome() {
+import TestAPIs from "../../../common/constants/TestApis";
+import { TeamsFxContext } from "../../../common/models/context";
+
+function GroupTabHome() {
+  const [tabContext, setTabContext] = useState();
+  const [errorMsg, setErrorMsg] = useState();
   const { teamsfx } = useContext(TeamsFxContext);
-  const [ token, setToken ] = useState("");
-  const [ responseMessage, setResponseMessage ] = useState("");
-  const [ txtMessage, setTxtMessage ] = useState("");
   const { loading, data, error } = useData(async () => {
     if (teamsfx) {
       const userInfo = await teamsfx.getUserInfo();
       setToken(teamsfx.teamsUserCredential.ssoToken);
-      //setToken(await teamsfx.getCredential().getToken(Scopes.LoginScope));
       console.log(`jbr-userInfo:${userInfo}`);
       console.log(`jbr-ssoToken:${token}`);
       return userInfo;
     }
   });
   const userName = loading || error ? "" : data.displayName;
+
+  try{
+    app.initialize();
+    app.getContext().then((context) => {
+      setTabContext(context);
+    });
+  }
+  catch(err){
+    console.log(JSON.stringify(err));
+    setErrorMsg(JSON.stringify(err));
+  }
+
+  const [ token, setToken ] = useState("");
+  const [ responseMessage, setResponseMessage ] = useState("");
+  const [ txtMessage, setTxtMessage ] = useState("");
 
   async function btnTestApiClick() {
     if(txtMessage === "") {
@@ -63,22 +76,18 @@ function PersonalTabHome() {
           <>
             <h2>Welcome{userName ? ", " + userName : ""}!</h2>
             <h3>Your app is running in personal tab.</h3>
-
-            {data ? (
-              <p>
-                <strong>User context: {JSON.stringify(data)}</strong>
-              </p>
-            ) : (
-              <></>
-            )}
-            {token !== "" ? (
-              <p>
-                <strong>token: {token}</strong>
-              </p>
-            ) : (
-              <></>
-            )}
-
+              {
+                data ? ( <p><strong>User context: {JSON.stringify(data)}</strong></p> ) : (<></>)
+              }
+              {
+                teamsfx ? ( <p><strong> teamsfx: {JSON.stringify(teamsfx)} </strong></p> ):(<></>)
+              }
+              {
+                tabContext ? ( <p><strong> TabContext: {JSON.stringify(tabContext)} </strong></p> ):(<></>)
+              }
+              {
+                errorMsg ? ( <p>errorMsg: {errorMsg}</p>) : (<></>)
+              }
             <table>
               <tbody>
                 <tr>
@@ -102,4 +111,4 @@ function PersonalTabHome() {
   );
 }
 
-export default PersonalTabHome;
+export default GroupTabHome;

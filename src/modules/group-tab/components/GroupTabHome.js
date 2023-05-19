@@ -75,7 +75,7 @@ function GroupTabHome() {
         ) : (
           <>
             <h2>Welcome{userName ? ", " + userName : ""}!</h2>
-            <h3>Your app is running in personal tab.</h3>
+            <h3>Your app is running in group tab.</h3>
               {
                 data ? ( <p><strong>User context: {JSON.stringify(data)}</strong></p> ) : (<></>)
               }
