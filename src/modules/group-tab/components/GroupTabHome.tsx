@@ -21,7 +21,7 @@ function GroupTabHome() {
     if (txtMessage === "") {
       setResponseMessage("Failed! First fill the text box.");
     } else {
-      fetch(TestAPIs.PostFeedbackUrl, {
+      fetch(TestAPIs.TestAPIPostUrl, {
         method: "POST",
         headers: {
           'Accept': "application/json",
@@ -29,8 +29,6 @@ function GroupTabHome() {
           'Authorization': `'Bearer ${token}'`
         },
         body: JSON.stringify({
-          Name: "test call",
-          Email: "text email",
           Message: txtMessage
         }),
       })
