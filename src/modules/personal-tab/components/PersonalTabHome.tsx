@@ -1,6 +1,6 @@
 import "../../../common/css/Tab.css";
 //import { Loader, Input, Button } from "@fluentui/react-components";
-import React, { useContext, useState } from "react"; //, useState, useCallback, useEffect, useRef
+import React, { useContext, useState, useEffect } from "react"; //, useState, useCallback, useEffect, useRef
 import { useData } from "@microsoft/teamsfx-react";
 import { app } from "@microsoft/teams-js";
 
@@ -9,7 +9,10 @@ import { TeamsFxContext } from "../../../common/models/Context";//"../../../comm
 
 function PersonalTabHome() {
   //const inputRef = React.useRef();
+  //const [loading, setLoading] = useState(true);
   const [token, setToken] = useState("");
+  //const [userInfo, setUserInfo] = useState({});
+  //const [userName, setUserName] = useState("");
   const [txtMessage, setTxtMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -22,7 +25,7 @@ function PersonalTabHome() {
     if (txtMessage === "") {
       setResponseMessage("Failed! First fill the text box.");
     } else {
-      fetch(TestAPIs.PostFeedbackUrl, {
+      fetch(TestAPIs.TestAPIPostUrl, {
         method: "POST",
         headers: {
           'Accept': "application/json",
@@ -34,9 +37,9 @@ function PersonalTabHome() {
           Email: "text email",
           Message: txtMessage
         }),
-      })
-        .then((response) => {
-          setResponseMessage(JSON.stringify(response.json()));
+      }).then(response => response.json()).then(resData=>{ 
+          console.log(resData); 
+          setResponseMessage(JSON.stringify(resData));
           setIsSending(false);
         })
         .catch((err) => {
@@ -49,6 +52,7 @@ function PersonalTabHome() {
   const [tabContext, setTabContext] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const { teamsUserCredential } = useContext(TeamsFxContext);
+  
   const { loading, data, error } = useData(async () => {
     if (teamsUserCredential) {
       const userInfo = await teamsUserCredential.getUserInfo();
@@ -59,6 +63,24 @@ function PersonalTabHome() {
     }
   });
   const userName = loading || error ? "" : data!.displayName;
+
+  
+  // useEffect(() => {
+  //   (async () => {
+  //     if(teamsUserCredential) {
+  //       try {
+  //         const test = await teamsUserCredential.getToken(["User.Read"]);
+  //         setToken(test?.token??'');
+  //         const userInfo = await teamsUserCredential.getUserInfo();
+  //         setUserInfo(userInfo);
+  //         setUserName(userInfo!.displayName);
+  //         setLoading(false);
+  //       } catch (error) {
+  //         setToken(JSON.stringify(error));
+  //       }
+  //     }
+  //   })();
+  // }, [teamsUserCredential]);
 
   try {
     app.initialize();

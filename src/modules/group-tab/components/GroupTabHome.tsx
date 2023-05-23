@@ -31,11 +31,11 @@ function GroupTabHome() {
         body: JSON.stringify({
           Message: txtMessage
         }),
+      }).then(response => response.json()).then(resData=>{ 
+        console.log(resData); 
+        setResponseMessage(JSON.stringify(resData));
+        setIsSending(false);
       })
-        .then((response) => {
-          setResponseMessage(JSON.stringify(response.json()));
-          setIsSending(false);
-        })
         .catch((err) => {
           setResponseMessage(`Response Error: ${err}`);
           setIsSending(false);
