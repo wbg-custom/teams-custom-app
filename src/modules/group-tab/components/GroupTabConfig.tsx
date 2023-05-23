@@ -21,9 +21,9 @@ class GroupTabConfig extends React.Component {
         const baseUrl = `https://${window.location.hostname}:${window.location.port}`;
         pages.config.setConfig({
           suggestedDisplayName: "Group Tab",
-          entityId: "Test002",
-          contentUrl: baseUrl + "/grouptabhome",
-          websiteUrl: baseUrl + "/grouptabhome",
+          entityId: "Group002",
+          contentUrl: baseUrl + "/index.html#/grouptabhome",
+          websiteUrl: baseUrl + "/index.html#/grouptabhome",
         }).then(() => {
           saveEvent.notifySuccess();
         });

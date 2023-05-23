@@ -1,11 +1,11 @@
 //import "../../../common/css/Tab.css";
 import React from "react";
 
-export default function NotFound() {
+export default function Privacy() {
   return (
-    <div class="welcome page">
+    <div className="welcome page">
         <div className="narrow page-padding">
-            <h1>404 Page not found.</h1>
+            <h1>Privacy Statement.</h1>
         </div>
     </div>
   );

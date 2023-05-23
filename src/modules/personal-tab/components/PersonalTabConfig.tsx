@@ -22,8 +22,8 @@ class PersonalTabConfig extends React.Component {
         pages.config.setConfig({
           suggestedDisplayName: "Personal Tab",
           entityId: "Test001",
-          contentUrl: baseUrl + "/personaltabhome",
-          websiteUrl: baseUrl + "/personaltabhome",
+          contentUrl: baseUrl + "/index.html#/personaltabhome",
+          websiteUrl: baseUrl + "/index.html#/personaltabhome",
         }).then(() => {
           saveEvent.notifySuccess();
         });
