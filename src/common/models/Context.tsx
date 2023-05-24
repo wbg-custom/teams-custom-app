@@ -5,7 +5,7 @@ import { Theme } from "@fluentui/react-components";
 export const TeamsFxContext = createContext<{
   theme?: Theme;
   themeString: string;
-  teamsUserCredential?: TeamsUserCredential;
+  teamsUserCredential?: any;
 }>({
   theme: undefined,
   themeString: "",

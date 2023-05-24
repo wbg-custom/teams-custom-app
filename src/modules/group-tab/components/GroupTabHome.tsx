@@ -26,7 +26,7 @@ function GroupTabHome() {
         headers: {
           'Accept': "application/json",
           "Content-Type": "application/json",
-          'Authorization': `'Bearer ${token}'`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           Message: txtMessage
@@ -49,7 +49,12 @@ function GroupTabHome() {
   const { loading, data, error } = useData(async () => {
     if (teamsUserCredential) {
       const userInfo = await teamsUserCredential.getUserInfo();
-      //setToken(teamsUserCredential.teamsUserCredential.ssoToken);
+      //teamsUserCredential.getToken(["User.Read"]).then((res : any) => {
+      //  setToken("");
+      //  console.log("JBRInfo"+res);
+      //});
+      // setToken(tokenInfo?.token??'');
+      setToken(teamsUserCredential.ssoToken.token);
       //console.log(`jbr-userInfo:${userInfo}`);
       //console.log(`jbr-ssoToken:${token}`);
       return userInfo;

@@ -30,7 +30,7 @@ function PersonalTabHome() {
         headers: {
           'Accept': "application/json",
           "Content-Type": "application/json",
-          'Authorization': `'Bearer ${token}'`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           Name: "test call",
@@ -56,7 +56,7 @@ function PersonalTabHome() {
   const { loading, data, error } = useData(async () => {
     if (teamsUserCredential) {
       const userInfo = await teamsUserCredential.getUserInfo();
-      //setToken(teamsUserCredential.teamsUserCredential.ssoToken);
+      setToken(teamsUserCredential.ssoToken.token);
       //console.log(`jbr-userInfo:${userInfo}`);
       //console.log(`jbr-ssoToken:${token}`);
       return userInfo;

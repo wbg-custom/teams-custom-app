@@ -1,0 +1,146 @@
+{
+    "User-Context": {
+      "displayName": "WBG Custom Admin",
+      "objectId": "a4db3227-cd53-429e-bee0-68f6344f5c49",
+      "tenantId": "7f611e52-fc16-4e0c-b873-87b7705ddd43",
+      "preferredUserName": "admin@wbgcustomoutlook.onmicrosoft.com"
+    },
+    "Teamfx-Context": {
+      "identityType": "User",
+      "configuration": {},
+      "teamsUserCredential": {
+        "config": {
+          "clientId": "e4f30e80-248c-4421-9ff8-ec1050d877b0",
+          "initiateLoginEndpoint": "https://a11b-2409-40d2-28-b33d-1154-2e31-81fd-71a0.ngrok-free.app"
+        },
+        "ssoToken": {
+          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiJhcGk6Ly90ZWFtc2N1c3RvbWFwcC5henVyZXdlYnNpdGVzLm5ldC9lNGYzMGU4MC0yNDhjLTQ0MjEtOWZmOC1lYzEwNTBkODc3YjAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZjYxMWU1Mi1mYzE2LTRlMGMtYjg3My04N2I3NzA1ZGRkNDMvIiwiaWF0IjoxNjg0NDkwODI5LCJuYmYiOjE2ODQ0OTA4MjksImV4cCI6MTY4NDQ5OTQ4MCwiYWNyIjoiMSIsImFpbyI6IkFUUUF5LzhUQUFBQTlYaWVkYkZ4WlVVSlJPWmdCOTR5MlI2REJWWWw0Q1JITmZQWkx1TFZoMmN1VVVmVGJ0WDFaalJ3a25nZFNsb2giLCJhbXIiOlsicHdkIl0sImFwcGlkIjoiMWZlYzhlNzgtYmNlNC00YWFmLWFiMWItNTQ1MWNjMzg3MjY0IiwiYXBwaWRhY3IiOiIwIiwiY25mIjp7InRiaCI6InBiV3o3Z0JBUEFCNVJUbTBsRzNYV1NKdDR1eTF5dVo0N3VLMkVnN05KVTA9In0sImlwYWRkciI6IjEwNi4yMTUuMjE3LjE3NyIsIm5hbWUiOiJXQkcgQ3VzdG9tIEFkbWluIiwib2lkIjoiYTRkYjMyMjctY2Q1My00MjllLWJlZTAtNjhmNjM0NGY1YzQ5IiwicHdkX3VybCI6Imh0dHBzOi8vcG9ydGFsLm1pY3Jvc29mdG9ubGluZS5jb20vQ2hhbmdlUGFzc3dvcmQuYXNweCIsInJoIjoiMC5BVkFBVWg1aGZ4YjhERTY0YzRlM2NGM2RRNEFPOC1TTUpDRkVuX2pzRUZEWWQ3Ql9BUHMuIiwic2NwIjoiYWNjZXNzX2FzX3VzZXIiLCJzdWIiOiJ5WVFWMFJNdmRLXzJvcWczNzd4SGJ5bVVObU5JNDg0U0lXM3ZqYktwSUFBIiwidGlkIjoiN2Y2MTFlNTItZmMxNi00ZTBjLWI4NzMtODdiNzcwNWRkZDQzIiwidW5pcXVlX25hbWUiOiJhZG1pbkB3YmdjdXN0b21vdXRsb29rLm9ubWljcm9zb2Z0LmNvbSIsInVwbiI6ImFkbWluQHdiZ2N1c3RvbW91dGxvb2sub25taWNyb3NvZnQuY29tIiwidXRpIjoidEdsbC14MHhMa3l6QnJRVnhOd2FBQSIsInZlciI6IjEuMCJ9.MqFwIdMi6UzK4U0KY6yU6EjEQK8VTm-eAjbJSABwpPZqVleircWHlhrtmOVadcdEKwuhNi7IfU8Q1H55_GGQd0sV84IVD75O7i6fj8qbTV3ajjm6gAhfeuKtRHjo0gppGQemp8Wt4PR7E4MXZIZQskbo0_5LeX0WbyqNBtM-lpmDYTPMi6mfiXf5glEG1PiqEiAxGreH0Eq2CiuRys52v3-0_Tx9ad9SnORGA7kMkDR8QEuEJUkq_k7ADiKu-ZgsLMWCEPu0i7kOmAFtUdOfBuHjpW1MvmPy3SZs032y9i66rkjGjcA5JspF00-cbYGgfa5bnZxQL7gii4OAoFHNhg",
+          "expiresOnTimestamp": 1684499480000
+        },
+        "initialized": false
+      }
+    },
+    "teamsUserCredential": {
+      "config": {
+        "initiateLoginEndpoint": "https://a11b-2409-40d2-28-b33d-1154-2e31-81fd-71a0.ngrok-free.app",
+        "clientId": "e4f30e80-248c-4421-9ff8-ec1050d877b0"
+      },
+      "ssoToken": {
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiJhcGk6Ly90ZWFtc2N1c3RvbWFwcC5henVyZXdlYnNpdGVzLm5ldC9lNGYzMGU4MC0yNDhjLTQ0MjEtOWZmOC1lYzEwNTBkODc3YjAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ZjYxMWU1Mi1mYzE2LTRlMGMtYjg3My04N2I3NzA1ZGRkNDMvIiwiaWF0IjoxNjg0ODQ0Nzg4LCJuYmYiOjE2ODQ4NDQ3ODgsImV4cCI6MTY4NDg1MjQzMSwiYWNyIjoiMSIsImFpbyI6IkFUUUF5LzhUQUFBQUV4NzNhUDMvWGg1UnJGZ0RsTlNySjNkbXFSUTI2Mms5cG12TTBURUpZQ0F2RnBlUnJqUWdjUnB1aTB6ekdqOUEiLCJhbXIiOlsicHdkIl0sImFwcGlkIjoiNWUzY2U2YzAtMmIxZi00Mjg1LThkNGItNzVlZTc4Nzg3MzQ2IiwiYXBwaWRhY3IiOiIwIiwiaXBhZGRyIjoiMjQwNToyMDE6NDA0NDpiMDMzOjljNmY6YTMzMzphOWMxOmE1YzQiLCJuYW1lIjoiV0JHIEN1c3RvbSBBZG1pbiIsIm9pZCI6ImE0ZGIzMjI3LWNkNTMtNDI5ZS1iZWUwLTY4ZjYzNDRmNWM0OSIsInJoIjoiMC5BVkFBVWg1aGZ4YjhERTY0YzRlM2NGM2RRNEFPOC1TTUpDRkVuX2pzRUZEWWQ3Ql9BUHMuIiwic2NwIjoiYWNjZXNzX2FzX3VzZXIiLCJzdWIiOiJ5WVFWMFJNdmRLXzJvcWczNzd4SGJ5bVVObU5JNDg0U0lXM3ZqYktwSUFBIiwidGlkIjoiN2Y2MTFlNTItZmMxNi00ZTBjLWI4NzMtODdiNzcwNWRkZDQzIiwidW5pcXVlX25hbWUiOiJhZG1pbkB3YmdjdXN0b21vdXRsb29rLm9ubWljcm9zb2Z0LmNvbSIsInVwbiI6ImFkbWluQHdiZ2N1c3RvbW91dGxvb2sub25taWNyb3NvZnQuY29tIiwidXRpIjoiYW5LRnNUQ0ZFRVdSeDBVUWc4WWpBQSIsInZlciI6IjEuMCJ9.HOpOhDjI6LVUkdToIlZeZF_04bn1o9lrSGhsRxi8cQCM0rPIafcWg0Dvpesjyg0fdzHrKH5sTTHBE6cSvtSmnjxvrj-DcKKiPfM1R9ryXcitvW5jWiyZEo0vGTs9U6GYIksrw2U624o_g8l_oGv1F0ROLULFP5M78TS2jNCht2OpyZoKbctk2YhbLIiKrHvbSpZaxxXhXI9ZSDuwxruG7dbe8Nzxe4CfFDxgsoBkyPsU5liUBmN4EuzdyOjqzz3rvkuetfWlSwpO4mfXwXUsuLVzwj2UQB2ihmyTsRMhxAFHtljWYsJZYq6_Fo2qu6wD5fzF_LPuGcRn3ZvKAl2GNA",
+        "expiresOnTimestamp": 1684852431000
+      },
+      "initialized": false
+    },
+    "Personal-Tab-Context": {
+      "app": {
+        "locale": "en-us",
+        "sessionId": "f5189c0b-c3ba-4a32-b866-9ddcf15ed9c5",
+        "theme": "default",
+        "iconPositionVertical": 303,
+        "parentMessageId": "",
+        "userClickTime": 1684492285432,
+        "userFileOpenPreference": "inline",
+        "host": {
+          "name": "Teams",
+          "clientType": "web",
+          "sessionId": "f6d2aa32-2170-3552-fa8d-a7cd1fa37945",
+          "ringId": "general"
+        },
+        "appLaunchId": "9fdc2493-fd13-47a1-9216-444fd3a880b4"
+      },
+      "page": {
+        "id": "8882efc5-85ab-4607-8e22-2f2b102ea9e4",
+        "frameContext": "content",
+        "subPageId": "",
+        "isFullScreen": false,
+        "isMultiWindow": false,
+        "sourceOrigin": null
+      },
+      "user": {
+        "id": "a4db3227-cd53-429e-bee0-68f6344f5c49",
+        "licenseType": "Unknown",
+        "loginHint": "admin@wbgcustomoutlook.onmicrosoft.com",
+        "userPrincipalName": "admin@wbgcustomoutlook.onmicrosoft.com",
+        "tenant": {
+          "id": "7f611e52-fc16-4e0c-b873-87b7705ddd43",
+          "teamsSku": "enterprise"
+        }
+      },
+      "sharePointSite": {
+        "teamSiteUrl": "",
+        "teamSiteDomain": "wbgcustomoutlook.sharepoint.com",
+        "teamSitePath": "",
+        "mySitePath": "/personal/admin_wbgcustomoutlook_onmicrosoft_com",
+        "mySiteDomain": "wbgcustomoutlook-my.sharepoint.com"
+      }
+    },
+    "Group-Tab-Context": {
+      "app": {
+        "locale": "en-us",
+        "sessionId": "5105dcec-9c88-4c1b-b52a-ba9310384e64",
+        "theme": "default",
+        "iconPositionVertical": 79,
+        "osLocaleInfo": {
+          "platform": "windows",
+          "regionalFormat": "en-in",
+          "longDate": "dd MMMM yyyy",
+          "shortDate": "dd-MM-yyyy",
+          "longTime": "HH:mm:ss",
+          "shortTime": "HH:mm"
+        },
+        "parentMessageId": "",
+        "userClickTime": 1684491152667,
+        "userFileOpenPreference": "inline",
+        "host": {
+          "name": "Teams",
+          "clientType": "desktop",
+          "sessionId": "11a9e7f7-2e80-ee6d-9efe-b74a3891bc25",
+          "ringId": "general"
+        },
+        "appLaunchId": "73ce4514-35fe-4bca-9d36-6f8368301b32"
+      },
+      "page": {
+        "id": "Test002",
+        "frameContext": "content",
+        "subPageId": "",
+        "isFullScreen": false,
+        "isMultiWindow": false,
+        "sourceOrigin": null
+      },
+      "user": {
+        "id": "a4db3227-cd53-429e-bee0-68f6344f5c49",
+        "licenseType": "Unknown",
+        "loginHint": "admin@wbgcustomoutlook.onmicrosoft.com",
+        "userPrincipalName": "admin@wbgcustomoutlook.onmicrosoft.com",
+        "tenant": {
+          "id": "7f611e52-fc16-4e0c-b873-87b7705ddd43",
+          "teamsSku": "enterprise"
+        }
+      },
+      "channel": {
+        "id": "19:bx9I-qzgCPEGniHuNyIMvfVysb2qbk08zTqQgQwyY5I1@thread.tacv2",
+        "displayName": "General",
+        "relativeUrl": "/sites/ProductManagement/Shared Documents/General",
+        "membershipType": "Regular",
+        "defaultOneNoteSectionId": ""
+      },
+      "team": {
+        "internalId": "19:bx9I-qzgCPEGniHuNyIMvfVysb2qbk08zTqQgQwyY5I1@thread.tacv2",
+        "displayName": "Product Management",
+        "type": 0,
+        "groupId": "c8f2165a-28f0-43ee-8305-9a90826f1023",
+        "templateId": "com.microsoft.teams.template.ManageAProject",
+        "isArchived": false,
+        "userRole": 0
+      },
+      "sharePointSite": {
+        "teamSiteUrl": "https://wbgcustomoutlook.sharepoint.com/sites/ProductManagement",
+        "teamSiteDomain": "wbgcustomoutlook.sharepoint.com",
+        "teamSitePath": "/sites/ProductManagement",
+        "teamSiteId": "",
+        "mySitePath": "/personal/admin_wbgcustomoutlook_onmicrosoft_com",
+        "mySiteDomain": "wbgcustomoutlook-my.sharepoint.com"
+      }
+    }
+  }
+  
