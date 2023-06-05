@@ -1,13 +1,33 @@
 import "../../../common/css/Tab.css";
 //import { Loader, Input, Button } from "@fluentui/react-components";
 import React, { useContext, useState, useEffect } from "react"; //, useState, useCallback, useEffect, useRef
+//import * as microsoftTeams from "@microsoft/teams-js";
 import { useData } from "@microsoft/teamsfx-react";
 import { app } from "@microsoft/teams-js";
+import Segment from 'react-segment-analytics';
 
 import TestAPIs from "../../../common/constants/TestAPIs"; //"../../../common/constants/TestApis";
 import { TeamsFxContext } from "../../../common/models/Context";//"../../../common/models/context";
+import GetGeoLocation from "../../../common/components/GetGeoLocation";
+import GetLocationWeb from "../../../common/components/GetLocationWeb";
 
 function PersonalTabHome() {
+  const [isWeb, setIsWeb] = useState(false);
+  useEffect(() => {
+    // initializing microsoft teams sdk
+    app.initialize().then(() => {
+      app.getContext().then((context) => {
+        if (context.app.host.clientType! === "web") {
+          setIsWeb(true);
+        }
+        else {
+          setIsWeb(false);
+        }
+      });
+    });
+  })
+
+
   //const inputRef = React.useRef();
   //const [loading, setLoading] = useState(true);
   const [token, setToken] = useState("");
@@ -143,10 +163,26 @@ function PersonalTabHome() {
                   </td>
                 </tr>
                 <tr>
-                  <td colSpan={5}>{responseMessage}</td>
+                  <td colSpan={4}>{responseMessage}</td>
                 </tr>
+                {
+                  isWeb ? (
+                    <tr>
+                    <td colSpan={4}>
+                    <Segment children={<GetLocationWeb />} writeKey={''} />
+                    </td>
+                  </tr>
+                  ) : (
+                    <tr>
+                    <td colSpan={4}>
+                    <Segment children={<GetGeoLocation />} writeKey={''} />
+                    </td>
+                  </tr>
+                  )
+                }
               </tbody>
             </table>
+
           </>
         )}
       </div>

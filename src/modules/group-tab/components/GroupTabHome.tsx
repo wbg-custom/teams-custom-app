@@ -80,7 +80,7 @@ function GroupTabHome() {
   return (
     <div className="welcome page">
       <div className="narrow page-padding">
-        <h1>This is custom personal tab</h1>
+        <h1>This is custom group tab</h1>
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -123,7 +123,7 @@ function GroupTabHome() {
                   </td>
                 </tr>
                 <tr>
-                  <td colSpan={5}>{responseMessage}</td>
+                  <td colSpan={4}>{responseMessage}</td>
                 </tr>
               </tbody>
             </table>
