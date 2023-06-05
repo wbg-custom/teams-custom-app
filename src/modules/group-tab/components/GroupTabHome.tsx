@@ -1,6 +1,6 @@
 import "../../../common/css/Tab.css";
 //import { Loader, Input, Button } from "@fluentui/react-components";
-import React, { useContext, useState, useCallback, useEffect, useRef } from "react"; //, useState
+import React, { useContext, useState } from "react"; //, useState//, useCallback, useEffect, useRef
 import { useData } from "@microsoft/teamsfx-react";
 import { app } from "@microsoft/teams-js";
 
@@ -16,11 +16,11 @@ function GroupTabHome() {
   const sendRequest = () => {
     if (isSending) return;
     // update state
-    setIsSending(true);
     // send the actual request
     if (txtMessage === "") {
       setResponseMessage("Failed! First fill the text box.");
     } else {
+      setIsSending(true);
       fetch(TestAPIs.TestAPIPostUrl, {
         method: "POST",
         headers: {

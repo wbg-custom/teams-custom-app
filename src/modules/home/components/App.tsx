@@ -13,7 +13,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import { SdkError, app, geoLocation, media } from "@microsoft/teams-js";
+import { app } from "@microsoft/teams-js";//, SdkError, geoLocation, media
 import { useTeamsUserCredential } from "@microsoft/teamsfx-react";
 
 import Home from "./Home";
@@ -33,66 +33,66 @@ import PersonalTabConfig from "../../personal-tab/components/PersonalTabConfig";
  * of the app.
  */
 
-const options = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0,
-};
+// const options = {
+//   enableHighAccuracy: true,
+//   timeout: 5000,
+//   maximumAge: 0,
+// };
 
-function success(pos: any) {
-  const crd = pos.coords;
+// function success(pos: any) {
+//   const crd = pos.coords;
 
-  console.log("Your current position is:");
-  console.log(`Latitude : ${crd.latitude}`);
-  console.log(`Longitude: ${crd.longitude}`);
-  console.log(`More or less ${crd.accuracy} meters.`);
-}
+//   console.log("Your current position is:");
+//   console.log(`Latitude : ${crd.latitude}`);
+//   console.log(`Longitude: ${crd.longitude}`);
+//   console.log(`More or less ${crd.accuracy} meters.`);
+// }
 
-function error(err: any) {
-  console.warn(`ERROR(${err.code}): ${err.message}`);
-}
+// function error(err: any) {
+//   console.warn(`ERROR(${err.code}): ${err.message}`);
+// }
 
-const deviceCapabilities = () => {
-  navigator.permissions.query({ name: "geolocation" }).then(function (result) {
-    console.log("geolocation permission:", result.state);
-  });
-  let imageProp: media.ImageProps = {
-    sources: [media.Source.Camera, media.Source.Gallery],
-    startMode: media.CameraStartMode.Photo,
-    ink: false,
-    cameraSwitcher: false,
-    textSticker: false,
-    enableFilter: true,
-  };
-  navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-  let mediaInput: media.MediaInputs = {
-    mediaType: media.MediaType.Image,
-    maxMediaCount: 10,
-    imageProps: imageProp,
-  };
-  media.selectMedia(
-    mediaInput,
-    (error: SdkError, attachments: media.Media[]) => {
-      if (error) {
-        if (error.message) {
-          alert(" ErrorCode: " + error.errorCode + error.message);
-        } else {
-          alert(" ErrorCode: " + error.errorCode);
-        }
-      }
-      if (attachments) {
-        let y = attachments[0];
-        console.log(y);
-        // img.src = "data:" + y.mimeType + ";base64," + y.preview;
-      }
-    }
-  );
-  console.log("isSupported", geoLocation.isSupported());
-  geoLocation.getCurrentLocation().then((result) => {
-    console.log("getCurrentLocation", result);
-  });
-  navigator.geolocation.getCurrentPosition(success, error, options);
-};
+// const deviceCapabilities = () => {
+//   navigator.permissions.query({ name: "geolocation" }).then(function (result) {
+//     console.log("geolocation permission:", result.state);
+//   });
+//   let imageProp: media.ImageProps = {
+//     sources: [media.Source.Camera, media.Source.Gallery],
+//     startMode: media.CameraStartMode.Photo,
+//     ink: false,
+//     cameraSwitcher: false,
+//     textSticker: false,
+//     enableFilter: true,
+//   };
+//   navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+//   let mediaInput: media.MediaInputs = {
+//     mediaType: media.MediaType.Image,
+//     maxMediaCount: 10,
+//     imageProps: imageProp,
+//   };
+//   media.selectMedia(
+//     mediaInput,
+//     (error: SdkError, attachments: media.Media[]) => {
+//       if (error) {
+//         if (error.message) {
+//           alert(" ErrorCode: " + error.errorCode + error.message);
+//         } else {
+//           alert(" ErrorCode: " + error.errorCode);
+//         }
+//       }
+//       if (attachments) {
+//         let y = attachments[0];
+//         console.log(y);
+//         // img.src = "data:" + y.mimeType + ";base64," + y.preview;
+//       }
+//     }
+//   );
+//   console.log("isSupported", geoLocation.isSupported());
+//   geoLocation.getCurrentLocation().then((result) => {
+//     console.log("getCurrentLocation", result);
+//   });
+//   navigator.geolocation.getCurrentPosition(success, error, options);
+// };
 
 export default function App() {
   const { loading, theme, themeString, teamsUserCredential } =
@@ -104,7 +104,7 @@ export default function App() {
     loading &&
       app.initialize().then(() => {
         // Hide the loading indicator.
-        deviceCapabilities();
+        //deviceCapabilities();
         app.notifySuccess();
       });
   }, [loading]);

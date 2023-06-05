@@ -40,11 +40,11 @@ function PersonalTabHome() {
   const sendRequest = () => {
     if (isSending) return;
     // update state
-    setIsSending(true);
     // send the actual request
     if (txtMessage === "") {
       setResponseMessage("Failed! First fill the text box.");
     } else {
+      setIsSending(true);
       fetch(TestAPIs.TestAPIPostUrl, {
         method: "POST",
         headers: {
