@@ -7,7 +7,7 @@ import { app } from "@microsoft/teams-js";
 import TestAPIs from "../../../common/constants/TestAPIs"; //"../../../common/constants/TestApis";
 import { TeamsFxContext } from "../../../common/models/Context";//"../../../common/models/context";
 
-function GroupTabHome() {
+function GroupTabHome_Test() {
   const [token, setToken] = useState("");
   const [txtMessage, setTxtMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -134,4 +134,4 @@ function GroupTabHome() {
   );
 }
 
-export default GroupTabHome;
+export default GroupTabHome_Test;
