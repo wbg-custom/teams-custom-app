@@ -1,40 +1,14 @@
 import "../../../common/css/Tab.css";
 //import { Loader, Input, Button } from "@fluentui/react-components";
-import React, { useContext, useState, useEffect } from "react"; //, useState, useCallback, useEffect, useRef
-//import * as microsoftTeams from "@microsoft/teams-js";
+import React, { useContext, useState } from "react"; //, useState//, useCallback, useEffect, useRef
 import { useData } from "@microsoft/teamsfx-react";
 import { app } from "@microsoft/teams-js";
-import Segment from 'react-segment-analytics';
 
 import TestAPIs from "../../../common/constants/TestAPIs"; //"../../../common/constants/TestApis";
 import { TeamsFxContext } from "../../../common/models/Context";//"../../../common/models/context";
-import GetGeoLocation from "../../../common/components/GetGeoLocation";
-import GetLocationWeb from "../../../common/components/GetLocationWeb";
-import CaptureImage from "../../../common/components/CaptureImage";
-import CaptureImageWeb from "../../../common/components/CaptureImageWeb";
 
-function PersonalTabHome() {
-  const [isWeb, setIsWeb] = useState(false);
-  useEffect(() => {
-    // initializing microsoft teams sdk
-    app.initialize().then(() => {
-      app.getContext().then((context) => {
-        if (context.app.host.clientType! === "web") {
-          setIsWeb(true);
-        }
-        else {
-          setIsWeb(false);
-        }
-      });
-    });
-  })
-
-
-  //const inputRef = React.useRef();
-  //const [loading, setLoading] = useState(true);
+function GroupTabHome() {
   const [token, setToken] = useState("");
-  //const [userInfo, setUserInfo] = useState({});
-  //const [userName, setUserName] = useState("");
   const [txtMessage, setTxtMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
@@ -55,15 +29,13 @@ function PersonalTabHome() {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          Name: "test call",
-          Email: "text email",
           Message: txtMessage
         }),
       }).then(response => response.json()).then(resData=>{ 
-          console.log(resData); 
-          setResponseMessage(JSON.stringify(resData));
-          setIsSending(false);
-        })
+        console.log(resData); 
+        setResponseMessage(JSON.stringify(resData));
+        setIsSending(false);
+      })
         .catch((err) => {
           setResponseMessage(`Response Error: ${err}`);
           setIsSending(false);
@@ -74,10 +46,14 @@ function PersonalTabHome() {
   const [tabContext, setTabContext] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const { teamsUserCredential } = useContext(TeamsFxContext);
-  
   const { loading, data, error } = useData(async () => {
     if (teamsUserCredential) {
       const userInfo = await teamsUserCredential.getUserInfo();
+      //teamsUserCredential.getToken(["User.Read"]).then((res : any) => {
+      //  setToken("");
+      //  console.log("JBRInfo"+res);
+      //});
+      // setToken(tokenInfo?.token??'');
       setToken(teamsUserCredential.ssoToken.token);
       //console.log(`jbr-userInfo:${userInfo}`);
       //console.log(`jbr-ssoToken:${token}`);
@@ -85,24 +61,6 @@ function PersonalTabHome() {
     }
   });
   const userName = loading || error ? "" : data!.displayName;
-
-  
-  // useEffect(() => {
-  //   (async () => {
-  //     if(teamsUserCredential) {
-  //       try {
-  //         const test = await teamsUserCredential.getToken(["User.Read"]);
-  //         setToken(test?.token??'');
-  //         const userInfo = await teamsUserCredential.getUserInfo();
-  //         setUserInfo(userInfo);
-  //         setUserName(userInfo!.displayName);
-  //         setLoading(false);
-  //       } catch (error) {
-  //         setToken(JSON.stringify(error));
-  //       }
-  //     }
-  //   })();
-  // }, [teamsUserCredential]);
 
   try {
     app.initialize();
@@ -122,13 +80,13 @@ function PersonalTabHome() {
   return (
     <div className="welcome page">
       <div className="narrow page-padding">
-        <h1>This is custom personal tab</h1>
+        <h1>This is custom group tab</h1>
         {loading ? (
           <p>Loading...</p>
         ) : (
           <>
             <h2>Welcome{userName ? ", " + userName : ""}!</h2>
-            <h3>Your app is running in personal tab.</h3>
+            <h3>Your app is running in group tab.</h3>
             {data ? (
               <p>
                 <strong>User context: {JSON.stringify(data)}</strong>
@@ -167,38 +125,8 @@ function PersonalTabHome() {
                 <tr>
                   <td colSpan={4}>{responseMessage}</td>
                 </tr>
-                {
-                  isWeb ? (
-                    <>
-                      <tr>
-                        <td colSpan={4}>
-                          <Segment children={<GetLocationWeb />} writeKey={''} />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colSpan={4}>
-                          <Segment children={<CaptureImageWeb />} writeKey={''} />
-                        </td>
-                      </tr>
-                    </>
-                  ) : (
-                    <>
-                    <tr>
-                    <td colSpan={4}>
-                    <Segment children={<GetGeoLocation />} writeKey={''} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={4}>
-                    <Segment children={<CaptureImage />} writeKey={''} />
-                    </td>
-                  </tr>
-                  </>
-                  )
-                }
               </tbody>
             </table>
-
           </>
         )}
       </div>
@@ -206,4 +134,4 @@ function PersonalTabHome() {
   );
 }
 
-export default PersonalTabHome;
+export default GroupTabHome;

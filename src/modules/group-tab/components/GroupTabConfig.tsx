@@ -20,7 +20,7 @@ class GroupTabConfig extends React.Component {
       pages.config.registerOnSaveHandler((saveEvent) => {
         const baseUrl = `https://${window.location.hostname}:${window.location.port}`;
         pages.config.setConfig({
-          suggestedDisplayName: "Group Tab",
+          suggestedDisplayName: "WBG Photos QA",
           entityId: "Group002",
           contentUrl: baseUrl + "/index.html#/grouptabhome",
           websiteUrl: baseUrl + "/index.html#/grouptabhome",
@@ -40,7 +40,7 @@ class GroupTabConfig extends React.Component {
 
     return (
       <div>
-        <h1>Group Tab Configuration</h1>
+        <h1>WBG Photos QA Configuration</h1>
         <div>
           This is where you will add your tab configuration options the user can choose when the tab
           is added to your team/group chat.

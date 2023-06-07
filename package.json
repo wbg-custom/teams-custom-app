@@ -25,6 +25,7 @@
     "react-scripts": "^5.0.1",
     "react-segment-analytics": "^2.0.0",
     "reactstrap": "^9.1.10",
+    "rsuite": "^5.35.0",
     "scheduler": "^0.23.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
