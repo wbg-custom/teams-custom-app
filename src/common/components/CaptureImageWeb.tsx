@@ -98,7 +98,7 @@ const CaptureImageWeb = () => {
         }
         if (attachments) {
           let y = attachments[0];
-          console.log('jbr-y:'+ JSON.stringify(y));
+          //console.log('jbr-y:'+ JSON.stringify(y));
           // img.src = "data:" + y.mimeType + ";base64," + y.preview;
           let imageString = y.mimeType + ";base64," + y.preview;
           setCapturedImage(imageString);
