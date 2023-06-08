@@ -117,7 +117,7 @@ const CaptureImageWeb = () => {
       {/* Card for capturing single image */}
       <Card>
         <Text weight="bold" as="h1">
-          Capture Image
+          Capture Image - 1
         </Text>
         <CardBody>
           <div className="flex columngap">
