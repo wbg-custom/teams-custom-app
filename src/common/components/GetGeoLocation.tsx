@@ -11,8 +11,8 @@ import { CardBody } from 'reactstrap';
  */
 const GetGeoLocation = () => {
     const [geoLocationValue, setGeoLocationValue] = useState<any>(null);
-    const [hasPermission, setHasPermission] = useState('defualt');
-    const [requestPermission, setRequestPermission] = useState('defualt');
+    //const [hasPermission, setHasPermission] = useState('defualt');
+    //const [requestPermission, setRequestPermission] = useState('defualt');
     const [isSupported, setIsSupported] = useState('defualt');
   useEffect(() => {
     //alert('setting values-1');
@@ -57,7 +57,7 @@ const GetGeoLocation = () => {
     // });
     
     microsoftTeams.geoLocation.isSupported() ? setIsSupported('true') : setIsSupported('false');
-    var valLocation = tjsLocation.getLocation({ allowChooseLocation: true, showMap: true }, (error: any, location: any) => {
+    tjsLocation.getLocation({ allowChooseLocation: true, showMap: true }, (error: any, location: any) => {
         let currentLocation = JSON.stringify(location);
         setGeoLocationValue(location);
         return currentLocation;
@@ -104,8 +104,8 @@ const GetGeoLocation = () => {
             <Text weight="semibold">Method</Text><br/>
             <Text>navigator.geolocation.getCurrentPosition, teams.location</Text><br/>
 
-            <Text weight="semibold">hasPermission: {hasPermission}</Text><br/>
-            <Text weight="semibold">requestPermission: {requestPermission}</Text><br/>
+            {/* <Text weight="semibold">hasPermission: {hasPermission}</Text><br/>
+            <Text weight="semibold">requestPermission: {requestPermission}</Text><br/> */}
             <Text weight="semibold">isSupported: {isSupported}</Text><br/>
 
             <Button onClick={getLocation} >Get Location</Button><br/>
