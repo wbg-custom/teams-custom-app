@@ -1,48 +1,49 @@
-import { useEffect, useState } from "react";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { useState } from "react";//useEffect, 
+//import * as microsoftTeams from "@microsoft/teams-js";
+import {media, SdkError} from "@microsoft/teams-js";//app, 
 import { Text, Button, Image, Card } from "@fluentui/react-components";
 //import CheckAndAlertForCameraPermission from "../helpers/NavigatorPermission";
 import { CardBody } from "reactstrap";
 
 const CaptureImageVideoAll = () => {
-  useEffect(() => {
-    // initializing microsoft teams sdk
-    microsoftTeams.app.initialize();
-  });
+//   useEffect(() => {
+//     // initializing microsoft teams sdk
+//     app.initialize();
+//   });
 
   const [capturedImage, setCapturedImage] = useState("");
   const [capturedVideo, setCapturedVideo] = useState("");
   const openCamera = () => {
-    const defaultVideoAndImageProps: microsoftTeams.media.VideoAndImageProps = {
+    const defaultVideoAndImageProps: media.VideoAndImageProps = {
       sources: [
-        microsoftTeams.media.Source.Camera,
-        microsoftTeams.media.Source.Gallery,
+        media.Source.Camera,
+        media.Source.Gallery,
       ],
-      startMode: microsoftTeams.media.CameraStartMode.Photo,
+      startMode: media.CameraStartMode.Photo,
       ink: true,
       cameraSwitcher: true,
       textSticker: true,
       enableFilter: true,
       maxDuration: 30,
     };
-    const defaultVideoAndImageMediaInput: microsoftTeams.media.MediaInputs = {
-      mediaType: microsoftTeams.media.MediaType.VideoAndImage,
+    const defaultVideoAndImageMediaInput: media.MediaInputs = {
+      mediaType: media.MediaType.VideoAndImage,
       maxMediaCount: 6,
       videoAndImageProps: defaultVideoAndImageProps,
     };
 
-    let videoControllerCallback: microsoftTeams.media.VideoControllerCallback =
+    let videoControllerCallback: media.VideoControllerCallback =
       {
         onRecordingStarted() {
           console.log("onRecordingStarted Callback Invoked");
         },
       };
 
-    microsoftTeams.media.selectMedia(
+    media.selectMedia(
       defaultVideoAndImageMediaInput,
       (
-        error: microsoftTeams.SdkError,
-        attachments: microsoftTeams.media.Media[]
+        error: SdkError,
+        attachments: media.Media[]
       ) => {
         if (error) {
           if (error.message) {
@@ -54,7 +55,7 @@ const CaptureImageVideoAll = () => {
 
         //var videoElement = document.createElement("video");
         attachments[0].getMedia(
-          (error: microsoftTeams.SdkError, blob: Blob) => {
+          (error: SdkError, blob: Blob) => {
             if (blob) {
               if (blob.type.includes("video")) {
                 //videoElement.setAttribute("src", URL.createObjectURL(blob));
