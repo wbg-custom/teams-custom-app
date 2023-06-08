@@ -1,24 +1,21 @@
-import { useState } from "react";//useEffect, 
+import { useState } from "react"; //useEffect,
 //import * as microsoftTeams from "@microsoft/teams-js";
-import {media, SdkError} from "@microsoft/teams-js";//app, 
+import { media, SdkError } from "@microsoft/teams-js"; //app,
 import { Text, Button, Image, Card } from "@fluentui/react-components";
 //import CheckAndAlertForCameraPermission from "../helpers/NavigatorPermission";
 import { CardBody } from "reactstrap";
 
 const CaptureImageVideoAll = () => {
-//   useEffect(() => {
-//     // initializing microsoft teams sdk
-//     app.initialize();
-//   });
+  //   useEffect(() => {
+  //     // initializing microsoft teams sdk
+  //     app.initialize();
+  //   });
 
   const [capturedImage, setCapturedImage] = useState("");
   const [capturedVideo, setCapturedVideo] = useState("");
   const openCamera = () => {
-    const defaultVideoAndImageProps: media.VideoAndImageProps = {
-      sources: [
-        media.Source.Camera,
-        media.Source.Gallery,
-      ],
+    let defaultVideoAndImageProps: media.VideoAndImageProps = {
+      sources: [media.Source.Camera, media.Source.Gallery],
       startMode: media.CameraStartMode.Photo,
       ink: true,
       cameraSwitcher: true,
@@ -26,25 +23,21 @@ const CaptureImageVideoAll = () => {
       enableFilter: true,
       maxDuration: 30,
     };
-    const defaultVideoAndImageMediaInput: media.MediaInputs = {
+    navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+    let defaultVideoAndImageMediaInput: media.MediaInputs = {
       mediaType: media.MediaType.VideoAndImage,
-      maxMediaCount: 6,
+      maxMediaCount: 2,
       videoAndImageProps: defaultVideoAndImageProps,
     };
-
-    let videoControllerCallback: media.VideoControllerCallback =
-      {
-        onRecordingStarted() {
-          console.log("onRecordingStarted Callback Invoked");
-        },
-      };
+    let videoControllerCallback: media.VideoControllerCallback = {
+      onRecordingStarted() {
+        console.log("onRecordingStarted Callback Invoked");
+      },
+    };
 
     media.selectMedia(
       defaultVideoAndImageMediaInput,
-      (
-        error: SdkError,
-        attachments: media.Media[]
-      ) => {
+      (error: SdkError, attachments: media.Media[]) => {
         if (error) {
           if (error.message) {
             alert(" ErrorCode: " + error.errorCode + error.message);
@@ -53,17 +46,17 @@ const CaptureImageVideoAll = () => {
           }
         }
 
-        //var videoElement = document.createElement("video");
-        attachments[0].getMedia(
-          (error: SdkError, blob: Blob) => {
+        if (attachments) {
+          //var videoElement = document.createElement("video");
+          attachments[0].getMedia((error: SdkError, blob: Blob) => {
             if (blob) {
               if (blob.type.includes("video")) {
                 //videoElement.setAttribute("src", URL.createObjectURL(blob));
                 setCapturedVideo(URL.createObjectURL(blob));
+              } else if (blob.type.includes("image")) {
+                setCapturedImage(URL.createObjectURL(blob));
               }
-              else if (blob.type.includes("image")) {
-                 setCapturedImage((URL.createObjectURL(blob)));
-              }
+              console.log('JBR-capture:'+JSON.stringify(URL.createObjectURL(blob)));
             }
             if (error) {
               if (error.message) {
@@ -72,8 +65,8 @@ const CaptureImageVideoAll = () => {
                 alert(" ErrorCode: " + error.errorCode);
               }
             }
-          }
-        );
+          });
+        }
       }
     );
   };
@@ -89,7 +82,7 @@ const CaptureImageVideoAll = () => {
           <Button onClick={openCamera}>Capture image</Button>
           <br />
           <Image src={capturedImage} />
-          <video src={capturedVideo} ></video>
+          <video src={capturedVideo}></video>
         </CardBody>
       </Card>
     </>
