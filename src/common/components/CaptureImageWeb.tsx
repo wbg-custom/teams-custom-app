@@ -95,7 +95,6 @@ const CaptureImageWeb = () => {
           } else {
             alert(" ErrorCode: " + error.errorCode);
           }
-          media.CameraStartMode 
         }
         if (attachments) {
           let y = attachments[0];
