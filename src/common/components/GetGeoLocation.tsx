@@ -57,7 +57,7 @@ const GetGeoLocation = () => {
     // });
     
     microsoftTeams.geoLocation.isSupported() ? setIsSupported('true') : setIsSupported('false');
-    tjsLocation.getLocation({ allowChooseLocation: true, showMap: true }, (error: any, location: any) => {
+    tjsLocation.getLocation({ allowChooseLocation: false, showMap: false }, (error: any, location: any) => {
         let currentLocation = JSON.stringify(location);
         setGeoLocationValue(location);
         return currentLocation;
