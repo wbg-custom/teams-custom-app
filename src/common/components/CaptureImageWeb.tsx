@@ -80,7 +80,7 @@ const CaptureImageWeb = () => {
       textSticker: false,
       enableFilter: true,
     };
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+    //navigator.mediaDevices.getUserMedia({ audio: true, video: true });
     let mediaInput: media.MediaInputs = {
       mediaType: media.MediaType.Image,
       maxMediaCount: 10,

@@ -4,15 +4,16 @@ import React, { useContext, useState, useEffect } from "react"; //, useState, us
 //import * as microsoftTeams from "@microsoft/teams-js";
 import { useData } from "@microsoft/teamsfx-react";
 import { app } from "@microsoft/teams-js";
-import Segment from 'react-segment-analytics';
+import Segment from "react-segment-analytics";
 
 import TestAPIs from "../../../common/constants/TestAPIs"; //"../../../common/constants/TestApis";
-import { TeamsFxContext } from "../../../common/models/Context";//"../../../common/models/context";
+import { TeamsFxContext } from "../../../common/models/Context"; //"../../../common/models/context";
 import GetGeoLocation from "../../../common/components/GetGeoLocation";
 import GetLocationWeb from "../../../common/components/GetLocationWeb";
 import CaptureImage from "../../../common/components/CaptureImage";
 import CaptureImageWeb from "../../../common/components/CaptureImageWeb";
-import CaptureImageVideoAll from "../../../common/components/CaptureImageVideoAll";
+import CaptureImageVideoApp from "../../../common/components/CaptureImageVideoApp";
+import CaptureVideoWeb from "../../../common/components/CaptureVideoWeb";
 
 function PersonalTabHome() {
   const [isWeb, setIsWeb] = useState(false);
@@ -22,14 +23,12 @@ function PersonalTabHome() {
       app.getContext().then((context) => {
         if (context.app.host.clientType! === "web") {
           setIsWeb(true);
-        }
-        else {
+        } else {
           setIsWeb(false);
         }
       });
     });
-  })
-
+  });
 
   //const inputRef = React.useRef();
   //const [loading, setLoading] = useState(true);
@@ -51,17 +50,19 @@ function PersonalTabHome() {
       fetch(TestAPIs.TestAPIPostUrl, {
         method: "POST",
         headers: {
-          'Accept': "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           Name: "test call",
           Email: "text email",
-          Message: txtMessage
+          Message: txtMessage,
         }),
-      }).then(response => response.json()).then(resData=>{ 
-          console.log(resData); 
+      })
+        .then((response) => response.json())
+        .then((resData) => {
+          console.log(resData);
           setResponseMessage(JSON.stringify(resData));
           setIsSending(false);
         })
@@ -70,12 +71,12 @@ function PersonalTabHome() {
           setIsSending(false);
         });
     }
-  }
+  };
 
   const [tabContext, setTabContext] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const { teamsUserCredential } = useContext(TeamsFxContext);
-  
+
   const { loading, data, error } = useData(async () => {
     if (teamsUserCredential) {
       const userInfo = await teamsUserCredential.getUserInfo();
@@ -87,7 +88,6 @@ function PersonalTabHome() {
   });
   const userName = loading || error ? "" : data!.displayName;
 
-  
   // useEffect(() => {
   //   (async () => {
   //     if(teamsUserCredential) {
@@ -108,15 +108,15 @@ function PersonalTabHome() {
   try {
     app.initialize();
     app.getContext().then((context) => {
-        setTabContext(JSON.stringify(context));
-        //return context;
+      setTabContext(JSON.stringify(context));
+      //return context;
     });
   } catch (err) {
     //console.log(JSON.stringify(err));
     setErrorMsg(JSON.stringify(err));
   }
 
-  const handleTxtMsg = (e: { target: { value: string; }; }) => {
+  const handleTxtMsg = (e: { target: { value: string } }) => {
     setTxtMessage(e.target.value + "");
   };
 
@@ -139,7 +139,12 @@ function PersonalTabHome() {
             )}
             {teamsUserCredential ? (
               <p>
-                <strong> teamsUserCredential: {JSON.stringify(teamsUserCredential)} </strong>
+                <strong>
+                  {" "}
+                  teamsUserCredential: {JSON.stringify(
+                    teamsUserCredential
+                  )}{" "}
+                </strong>
               </p>
             ) : (
               <></>
@@ -159,52 +164,69 @@ function PersonalTabHome() {
                   <td>:</td>
                   <td>
                     {/* <TextField label="With placeholder" placeholder="Please enter text here" onChange={handleTxtMsg} /> */}
-                    <input type="text" value={txtMessage} onChange={handleTxtMsg} placeholder="Enter message here" />
+                    <input
+                      type="text"
+                      value={txtMessage}
+                      onChange={handleTxtMsg}
+                      placeholder="Enter message here"
+                    />
                   </td>
                   <td>
-                    <button type="button" disabled={isSending} onClick={sendRequest}>Submit</button>
+                    <button
+                      type="button"
+                      disabled={isSending}
+                      onClick={sendRequest}
+                    >
+                      Submit
+                    </button>
                   </td>
                 </tr>
                 <tr>
                   <td colSpan={4}>{responseMessage}</td>
                 </tr>
-                {
-                  isWeb ? (
-                    <>
-                      <tr>
-                        <td colSpan={4}>
-                          <Segment children={<GetLocationWeb />} writeKey={''} />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colSpan={4}>
-                          <Segment children={<CaptureImageWeb />} writeKey={''} />
-                        </td>
-                      </tr>
-                    </>
-                  ) : (
-                    <>
+                {isWeb ? (
+                  <>
                     <tr>
-                    <td colSpan={4}>
-                    <Segment children={<GetGeoLocation />} writeKey={''} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colSpan={4}>
-                    <Segment children={<CaptureImage />} writeKey={''} />
-                    </td>
-                  </tr>
+                      <td colSpan={4}>
+                        <Segment children={<GetLocationWeb />} writeKey={""} />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colSpan={4}>
+                        <Segment children={<CaptureImageWeb />} writeKey={""} />
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colSpan={4}>
+                        <Segment children={<CaptureVideoWeb />} writeKey={""} />
+                      </td>
+                    </tr>
                   </>
-                  )
-                }
-                  <tr>
-                    <td colSpan={4}>
-                      <Segment children={<CaptureImageVideoAll />} writeKey={''} />
-                    </td>
-                  </tr>
+                ) : (
+                  <>
+                    <tr>
+                      <td colSpan={4}>
+                        <Segment children={<GetGeoLocation />} writeKey={""} />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colSpan={4}>
+                        <Segment children={<CaptureImage />} writeKey={""} />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colSpan={4}>
+                        <Segment
+                          children={<CaptureImageVideoApp />}
+                          writeKey={""}
+                        />
+                      </td>
+                    </tr>
+                  </>
+                )}
               </tbody>
             </table>
-
           </>
         )}
       </div>
