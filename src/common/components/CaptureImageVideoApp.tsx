@@ -5,7 +5,7 @@ import { Text, Button, Image, Card } from "@fluentui/react-components";
 //import CheckAndAlertForCameraPermission from "../helpers/NavigatorPermission";
 import { CardBody } from "reactstrap";
 
-const CaptureImageVideoAll = () => {
+const CaptureImageVideoApp = () => {
   //   useEffect(() => {
   //     // initializing microsoft teams sdk
   //     app.initialize();
@@ -79,7 +79,7 @@ const CaptureImageVideoAll = () => {
         </Text>
         <CardBody>
           <div className="flex columngap"></div>
-          <Button onClick={openCamera}>Capture image</Button>
+          <Button onClick={openCamera}>Capture image or video</Button>
           <br />
           <Image src={capturedImage} />
           <video src={capturedVideo}></video>
@@ -89,4 +89,4 @@ const CaptureImageVideoAll = () => {
   );
 };
 
-export default CaptureImageVideoAll;
+export default CaptureImageVideoApp;
