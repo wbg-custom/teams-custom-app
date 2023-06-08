@@ -12,6 +12,7 @@ import GetGeoLocation from "../../../common/components/GetGeoLocation";
 import GetLocationWeb from "../../../common/components/GetLocationWeb";
 import CaptureImage from "../../../common/components/CaptureImage";
 import CaptureImageWeb from "../../../common/components/CaptureImageWeb";
+import CaptureImageVideoAll from "../../../common/components/CaptureImageVideoAll";
 
 function PersonalTabHome() {
   const [isWeb, setIsWeb] = useState(false);
@@ -196,6 +197,11 @@ function PersonalTabHome() {
                   </>
                   )
                 }
+                  <tr>
+                    <td colSpan={4}>
+                      <Segment children={<CaptureImageVideoAll />} writeKey={''} />
+                    </td>
+                  </tr>
               </tbody>
             </table>
 

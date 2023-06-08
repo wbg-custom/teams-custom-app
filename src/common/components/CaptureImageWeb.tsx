@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import { useEffect, useState } from "react";
-import * as microsoftTeams from "@microsoft/teams-js";
-import { SdkError, geoLocation, media } from "@microsoft/teams-js";
+import { useState } from "react";//useEffect, 
+//import * as microsoftTeams from "@microsoft/teams-js";
+import { SdkError, media } from "@microsoft/teams-js";//, geoLocation
 import { Text, Button, Image, Card } from "@fluentui/react-components";
-import CheckAndAlertForCameraPermission from "../helpers/NavigatorPermission";
+//import CheckAndAlertForCameraPermission from "../helpers/NavigatorPermission";
 import { CardBody } from "reactstrap";
 /**
  * The 'CaptureImageWeb' component
@@ -17,9 +17,9 @@ const CaptureImageWeb = () => {
   const [capturedImage, setCapturedImage] = useState("");
 
   // useEffect(() => {
-  //     // initializing microsoft teams sdk
-  //     microsoftTeams.app.initialize();
-  // })
+  //   // initializing microsoft teams sdk
+  //   microsoftTeams.app.initialize();
+  // });
   // // Method to validate before capturing media
   // function captureMedia() {
   //     // Method to ask for image capture permission and then select media
