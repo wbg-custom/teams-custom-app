@@ -98,17 +98,18 @@ const CaptureImageWeb = () => {
         }
         if (attachments) {
           let y = attachments[0];
-          console.log(y);
-          setCapturedImage(y.preview);
+          console.log('jbr-y:'+y);
           // img.src = "data:" + y.mimeType + ";base64," + y.preview;
+          let imageString = "data:" + y.mimeType + ";base64," + y.content;
+          setCapturedImage(imageString);
         }
       }
     );
-    console.log("isSupported", geoLocation.isSupported());
-    geoLocation.getCurrentLocation().then((result) => {
-      console.log("getCurrentLocation", result);
-    });
-    navigator.geolocation.getCurrentPosition(success, error, options);
+    // console.log("isSupported", geoLocation.isSupported());
+    // geoLocation.getCurrentLocation().then((result) => {
+    //   console.log("getCurrentLocation", result);
+    // });
+    // navigator.geolocation.getCurrentPosition(success, error, options);
   };
 
   return (
@@ -120,13 +121,13 @@ const CaptureImageWeb = () => {
         </Text>
         <CardBody>
           <div className="flex columngap">
-            <Text>Checks for permission before capturing image.</Text>
+            <Text>Checks for permission before capturing image.</Text><br/>
 
-            <Text weight="medium">SDK used: </Text>
-            <Text>navigator, microsoftTeams </Text>
-            <Text weight="medium">Method: </Text>
-            <Text>navigator.mediaDevices.getUserMedia, teams.getmedia</Text>
-            <Button onClick={deviceCapabilities}>Capture image</Button>
+            <Text weight="medium">SDK used: </Text><br/>
+            <Text>navigator, microsoftTeams </Text><br/>
+            <Text weight="medium">Method: </Text><br/>
+            <Text>navigator.mediaDevices.getUserMedia, teams.getmedia</Text><br/>
+            <Button onClick={deviceCapabilities}>Capture image</Button><br/>
             <Image src={capturedImage} />
           </div>
         </CardBody>
