@@ -23,7 +23,7 @@ const CaptureImageVideoApp = () => {
       enableFilter: true,
       maxDuration: 30,
     };
-    navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+    //navigator.mediaDevices.getUserMedia({ audio: true, video: true });
     let defaultVideoAndImageMediaInput: media.MediaInputs = {
       mediaType: media.MediaType.VideoAndImage,
       maxMediaCount: 2,
