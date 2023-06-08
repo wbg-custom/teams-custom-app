@@ -95,6 +95,7 @@ const CaptureImageWeb = () => {
           } else {
             alert(" ErrorCode: " + error.errorCode);
           }
+          media.CameraStartMode 
         }
         if (attachments) {
           let y = attachments[0];
@@ -103,6 +104,7 @@ const CaptureImageWeb = () => {
           let imageString = y.mimeType + ";base64," + y.preview;
           setCapturedImage(imageString);
         }
+        return true;
       }
     );
     // console.log("isSupported", geoLocation.isSupported());
