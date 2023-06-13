@@ -1,0 +1,108 @@
+.image {
+  position: relative;
+}
+
+.imageOverLay {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  background: rgb(205 184 184 / 60%);
+  display: flex !important;
+  opacity: 0.8;
+  visibility: hidden;
+  vertical-align: middle;
+  padding-left: 5px;
+  padding-bottom: 3px;
+  padding-right: 5px;
+  padding-top: 3px;
+  color: rgb(72, 70, 68);
+  outline-width: 0px;
+  cursor: pointer;
+  grid-template-columns: auto 0.75rem 1fr;
+  display: inline-grid;
+  position: relative;
+}
+
+#groupSelect {
+  display: none;
+}
+
+#groupContainer {
+  width: fit-content;
+}
+
+#groupSelect.checkvisible {
+  display: inline-block;
+  vertical-align: sub;
+  padding: 0 5;
+}
+
+#groupContainer:hover > .dateOverLay {
+  display: inline-block;
+  vertical-align: sub;
+  padding: 0 5;
+}
+
+.dateGroup {
+  display: inline-block;
+}
+
+.imageOverLay:hover {
+  opacity: 1;
+}
+
+#imgContainer:hover > .imageOverLay {
+  visibility: visible;
+}
+
+.checkvisible.imageOverLay {
+  visibility: visible;
+}
+
+.photoWrapper {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.photoInfo {
+  position: absolute;
+  width: 100%;
+  bottom: -100%;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.65);
+  padding: 4px 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+.photoWrapper:hover {
+  /* transform: scale(1.05); */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.photoWrapper:hover .photoInfo {
+  bottom: 0;
+}
+.masonry-with-rows .photoWrapper img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.map-image {
+  border-radius: 8px;
+  position: relative;
+  border: 1px solid black;
+  box-shadow: 1px 1px whitesmoke;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.highlight {
+  border: 1px solid red;
+}
+
+.map-container{
+  width:50px;
+  height:50px;
+}

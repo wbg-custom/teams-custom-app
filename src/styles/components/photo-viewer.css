@@ -1,0 +1,35 @@
+.carousel-wrapper .ui-carousel__navigation li .ui-box{
+  width: 114px;
+  height: 80px;
+}
+.carousel-wrapper .ui-carousel__navigation li .ui-box img.ui-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.carousel-wrapper .ui-carousel__item img{
+  height: calc(100vh - 200px);
+  width: auto;
+}
+.carousel-wrapper > div, .carousel-wrapper .ui-carousel__item{
+  width: 100%;
+}
+.carousel-wrapper .ui-carousel__itemscontainer{
+  margin: auto;
+}
+.metadata-trail{
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: -4px;
+  margin-top: -4px;
+  background-color: #fff;
+  width: 300px;
+  overflow: auto;
+  z-index: 10;
+  box-shadow: -3px 0 2px rgba(0,0,0,0.15);
+  padding:5px 20px 20px;
+}
+.metadata-content{
+  padding: 12px 0;
+}
