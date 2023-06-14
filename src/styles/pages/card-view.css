@@ -1,0 +1,18 @@
+.photoOrganizeWrapper{
+  min-width: 320px;
+  max-width: 320px;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 575px){
+  .photoOrganizeWrapper{
+    min-width: calc(100vw);
+    max-width: calc(100vw);
+    padding: 0 10px;
+    margin-bottom: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+}
