@@ -20,9 +20,9 @@ function PersonalTabHome() {
   useEffect(() => {
     // initializing microsoft teams sdk
     app.initialize().then(() => {
-      app.getContext().then((context) => {
+      app.getContext().then((context: any) => {
         setTabContext(JSON.stringify(context));
-        authentication.getAuthToken().then(value => {
+        authentication.getAuthToken().then((value: any) => {
           setToken(value);
         });
         if (context.app.host.clientType! === "web") {
@@ -37,6 +37,7 @@ function PersonalTabHome() {
   //const inputRef = React.useRef();
   //const [loading, setLoading] = useState(true);
   const [token, setToken] = useState("");
+  //const [utoken, setUToken] = useState("");
   //const [userInfo, setUserInfo] = useState({});
   //const [userName, setUserName] = useState("");
   const [txtMessage, setTxtMessage] = useState("");
@@ -84,7 +85,7 @@ function PersonalTabHome() {
   const { loading, data, error } = useData(async () => {
     if (teamsUserCredential) {
       const userInfo = await teamsUserCredential.getUserInfo();
-      //setToken(teamsUserCredential.ssoToken.token);
+      //setUToken(teamsUserCredential.ssoToken.token);
       //console.log(`jbr-userInfo:${userInfo}`);
       //console.log(`jbr-ssoToken:${token}`);
       return userInfo;
@@ -141,6 +142,9 @@ function PersonalTabHome() {
             ) : (
               <></>
             )}
+            <p>
+              authentication.getAuthToken(): {token}
+            </p>
             {teamsUserCredential ? (
               <p>
                 <strong>
