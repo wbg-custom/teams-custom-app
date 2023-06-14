@@ -3,7 +3,7 @@ import "../../../common/css/Tab.css";
 import React, { useContext, useState, useEffect } from "react"; //, useState, useCallback, useEffect, useRef
 //import * as microsoftTeams from "@microsoft/teams-js";
 import { useData } from "@microsoft/teamsfx-react";
-import { app } from "@microsoft/teams-js";
+import { app, authentication } from "@microsoft/teams-js";
 import Segment from "react-segment-analytics";
 
 import TestAPIs from "../../../common/constants/TestAPIs"; //"../../../common/constants/TestApis";
@@ -21,6 +21,10 @@ function PersonalTabHome() {
     // initializing microsoft teams sdk
     app.initialize().then(() => {
       app.getContext().then((context) => {
+        setTabContext(JSON.stringify(context));
+        authentication.getAuthToken().then(value => {
+          setToken(value);
+        });
         if (context.app.host.clientType! === "web") {
           setIsWeb(true);
         } else {
@@ -80,7 +84,7 @@ function PersonalTabHome() {
   const { loading, data, error } = useData(async () => {
     if (teamsUserCredential) {
       const userInfo = await teamsUserCredential.getUserInfo();
-      setToken(teamsUserCredential.ssoToken.token);
+      //setToken(teamsUserCredential.ssoToken.token);
       //console.log(`jbr-userInfo:${userInfo}`);
       //console.log(`jbr-ssoToken:${token}`);
       return userInfo;
@@ -105,16 +109,16 @@ function PersonalTabHome() {
   //   })();
   // }, [teamsUserCredential]);
 
-  try {
-    app.initialize();
-    app.getContext().then((context) => {
-      setTabContext(JSON.stringify(context));
-      //return context;
-    });
-  } catch (err) {
-    //console.log(JSON.stringify(err));
-    setErrorMsg(JSON.stringify(err));
-  }
+  // try {
+  //   app.initialize();
+  //   app.getContext().then((context) => {
+  //     setTabContext(JSON.stringify(context));
+  //     //return context;
+  //   });
+  // } catch (err) {
+  //   //console.log(JSON.stringify(err));
+  //   setErrorMsg(JSON.stringify(err));
+  // }
 
   const handleTxtMsg = (e: { target: { value: string } }) => {
     setTxtMessage(e.target.value + "");
