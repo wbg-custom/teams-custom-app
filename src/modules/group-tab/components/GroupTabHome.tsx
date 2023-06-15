@@ -19,13 +19,14 @@ function GroupTabHome() {
   const [isWeb, setIsWeb] = useState(false);
   const [tabContext, setTabContext] = useState("");
   useEffect(() => {
-    fillData();
     // initializing microsoft teams sdk
     app.initialize().then(() => {
         app.getContext().then((context: any) => {
           setTabContext(JSON.stringify(context));
           setChannelId(context.channel.id);
           setTeamId(context.team.groupId);
+          
+          fillData();
           console.log('JBR-Tabcontext:'+tabContext);
           authentication.getAuthToken().then((value: any) => {
             setToken(value);
