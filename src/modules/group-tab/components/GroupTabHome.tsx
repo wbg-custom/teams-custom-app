@@ -13,14 +13,14 @@ function GroupTabHome() {
   const toggleShowUploader = () => {
     setShowUpload(!showUpload);
   };
-  const [channelId, setChannelId] = useState("");
-  const [teamId, setTeamId] = useState("");
+  const [teamId, setTeamId] = useState("team001");
+  const [channelId, setChannelId] = useState("channel004");
 
   const [isWeb, setIsWeb] = useState(false);
   const [tabContext, setTabContext] = useState("");
   useEffect(() => {
     fillData();
-    
+
     // // initializing microsoft teams sdk
     // app.initialize();
     // app.getContext().then((context: any) => {
@@ -148,13 +148,16 @@ function GroupTabHome() {
             !isDataPhoto ? (
                 <Spinner/>
             ) : (
+                dataPhotoList ? (
                 dataPhotoList.map((row, index) => {
                     return(
                         <div className="imgDiv" key={index}>
                             <img className="imgBox" src={row['fileUrl']}/>
                         </div>
                     )
-                })
+                })) : (
+                    <div></div>
+                )
             )
         }
         {getResponse}
