@@ -15,26 +15,28 @@ function GroupTabHome() {
   };
   const [channelId, setChannelId] = useState("");
   const [teamId, setTeamId] = useState("");
-  
+
   const [isWeb, setIsWeb] = useState(false);
   const [tabContext, setTabContext] = useState("");
   useEffect(() => {
-    // initializing microsoft teams sdk
-    app.initialize();
-    app.getContext().then((context: any) => {
-        setTabContext(JSON.stringify(context));
-        setChannelId(context.channel.id);
-        setTeamId(context.team.groupId);
-        //return context;
-        console.log('JBR-Tabcontext:'+tabContext);
-        fillData();
-    });
+    fillData();
+    
+    // // initializing microsoft teams sdk
+    // app.initialize();
+    // app.getContext().then((context: any) => {
+    //     setTabContext(JSON.stringify(context));
+    //     setChannelId(context.channel.id);
+    //     setTeamId(context.team.groupId);
+    //     //return context;
+    //     console.log('JBR-Tabcontext:'+tabContext);
+    //     fillData();
+    // });
     // app.initialize().then(() => {
     //     app.getContext().then((context: any) => {
     //       setTabContext(JSON.stringify(context));
     //       setChannelId(context.channel.id);
     //       setTeamId(context.team.groupId);
-          
+
     //       fillData();
     //       console.log('JBR-Tabcontext:'+tabContext);
     //       authentication.getAuthToken().then((value: any) => {
@@ -53,7 +55,7 @@ function GroupTabHome() {
   const [getResponse, setGetResponse] = useState("");
   const [dataPhotoList, setDataPhotoList] = useState([]);
   const [isDataPhoto, setIsDataPhoto] = useState(false);
-  
+
   const fillData = () => {
       setIsDataPhoto(false);
       setGetResponse("");
@@ -76,7 +78,7 @@ function GroupTabHome() {
             setGetResponse(`Response Error: ${err}`);
             setIsDataPhoto(true);
         });
-    
+
   };
 
   const [txtMessage, setTxtMessage] = useState("");
