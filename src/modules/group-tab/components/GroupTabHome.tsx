@@ -19,24 +19,34 @@ function GroupTabHome() {
   const [isWeb, setIsWeb] = useState(false);
   const [tabContext, setTabContext] = useState("");
   useEffect(() => {
-    fillData();
     // initializing microsoft teams sdk
-    app.initialize().then(() => {
-        app.getContext().then((context: any) => {
-          setTabContext(JSON.stringify(context));
-          setChannelId(context.channel.id);
-          setTeamId(context.team.groupId);
-          console.log('JBR-Tabcontext:'+tabContext);
-          authentication.getAuthToken().then((value: any) => {
-            setToken(value);
-          });
-          if (context.app.host.clientType! === "web") {
-            setIsWeb(true);
-          } else {
-            setIsWeb(false);
-          }
-        });
-      });
+    app.initialize();
+    app.getContext().then((context: any) => {
+        setTabContext(JSON.stringify(context));
+        setChannelId(context.channel.id);
+        setTeamId(context.team.groupId);
+        //return context;
+        console.log('JBR-Tabcontext:'+tabContext);
+        fillData();
+    });
+    // app.initialize().then(() => {
+    //     app.getContext().then((context: any) => {
+    //       setTabContext(JSON.stringify(context));
+    //       setChannelId(context.channel.id);
+    //       setTeamId(context.team.groupId);
+          
+    //       fillData();
+    //       console.log('JBR-Tabcontext:'+tabContext);
+    //       authentication.getAuthToken().then((value: any) => {
+    //         setToken(value);
+    //       });
+    //       if (context.app.host.clientType! === "web") {
+    //         setIsWeb(true);
+    //       } else {
+    //         setIsWeb(false);
+    //       }
+    //     });
+    //   });
   }, [reloadFillData]);
 
   const [token, setToken] = useState("token001");
