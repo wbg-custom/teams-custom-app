@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input, Button, Spinner } from "@fluentui/react-components";
 import { Search24Regular, Add24Regular } from "@fluentui/react-icons";
+import { app, authentication } from "@microsoft/teams-js";
 //import { debounce } from "lodash";
 import TestAPIs from "../../../common/constants/TestAPIs"; //"../../../common/constants/TestApis";
 import "../../../common/css/Tab.css";
@@ -12,9 +13,30 @@ function GroupTabHome() {
   const toggleShowUploader = () => {
     setShowUpload(!showUpload);
   };
+  const [channelId, setChannelId] = useState("");
+  const [teamId, setTeamId] = useState("");
   
+  const [isWeb, setIsWeb] = useState(false);
+  const [tabContext, setTabContext] = useState("");
   useEffect(() => {
     fillData();
+    // initializing microsoft teams sdk
+    app.initialize().then(() => {
+        app.getContext().then((context: any) => {
+          setTabContext(JSON.stringify(context));
+          setChannelId(context.channel.id);
+          setTeamId(context.team.groupId);
+          console.log('JBR-Tabcontext:'+tabContext);
+          authentication.getAuthToken().then((value: any) => {
+            setToken(value);
+          });
+          if (context.app.host.clientType! === "web") {
+            setIsWeb(true);
+          } else {
+            setIsWeb(false);
+          }
+        });
+      });
   }, [reloadFillData]);
 
   const [token, setToken] = useState("token001");
@@ -26,8 +48,8 @@ function GroupTabHome() {
       setIsDataPhoto(false);
       setGetResponse("");
       var formData = new FormData();
-      formData.append("TeamId","team001");
-      formData.append("ChannelId","channel001");
+      formData.append("TeamId",teamId);
+      formData.append("ChannelId",channelId);
       fetch(TestAPIs.GetPhotoListUrl, {
         method: "POST",
         headers: {
@@ -50,36 +72,43 @@ function GroupTabHome() {
   const [txtMessage, setTxtMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
+  const [file, setFile] = useState();
+    function handlePhotoSelect(e: any) {
+        console.log(e.target.files);
+        //setFile(URL.createObjectURL(e.target.files[0]));
+        setFile(e.target.files[0]);
+    }
   const sendRequest = () => {
     if (isSending) return;
     // update state
     // send the actual request
-    if (txtMessage === "") {
-      setResponseMessage("Failed! First fill the text box.");
+    setResponseMessage('Loading...');
+    if (!file) {
+      setResponseMessage("Failed! First select file.");
     } else {
       setIsSending(true);
-      fetch(TestAPIs.TestAPIPostUrl, {
+      var formData = new FormData();
+      formData.append("TeamId",teamId);
+      formData.append("ChannelId",channelId);
+      formData.append("file",file);
+      fetch(TestAPIs.UploadPhotoUrl, {
         method: "POST",
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify({
-          Name: "test call",
-          Email: "text email",
-          Message: txtMessage,
-        }),
+        body: formData
       })
         .then((response) => response.json())
         .then((resData) => {
           console.log(resData);
           setResponseMessage(JSON.stringify(resData));
           setIsSending(false);
+          setReloadFillData(!reloadFillData);
         })
         .catch((err) => {
           setResponseMessage(`Response Error: ${err}`);
           setIsSending(false);
+          setReloadFillData(!reloadFillData);
         });
     }
   };
@@ -125,15 +154,25 @@ function GroupTabHome() {
               <h4> Upload or Capture Photo </h4>
             </div>
             <div className="popupContent">
-              <input type="file" />
+              <input type="file" onChange={handlePhotoSelect} />
             </div>
             <div className="popupContent">
-              <Button appearance="primary" onClick={() => sendRequest()}>
-                Upload
-              </Button>
+              {
+                isSending ? (
+                <Button appearance="primary" disabled>
+                    Upload
+                 </Button>
+                ):
+                (
+                <Button appearance="primary" onClick={() => sendRequest()}>
+                    Upload
+                 </Button>
+                )
+              }
               <Button appearance="outline" onClick={() => toggleShowUploader()}>
                 Cancel
-              </Button> <br/>
+                </Button>
+              <br/>
 
               {
                 responseMessage !== "" ? `Response: ${responseMessage}` : ""
