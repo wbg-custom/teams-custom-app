@@ -1,0 +1,15 @@
+.floatLeft{float: left;}
+.searchTxtCls{float: left; width: 80%;}
+.searchBtnCls{float: left; width: 15%;margin-left: 1%;}
+.searchArea{width: 100%;}
+
+.popupArea{position: absolute; width: 100%; background-color: rgba(0, 0, 0, 0.7);top:0;left:0;right:0;bottom:0;}
+.popupBody{width: 50%; margin: auto; margin-top: 10%;background-color: white;padding: 20px;}
+.popupTitle{text-align: center;}
+.popupContent{text-align: center;padding: 10px;}
+button{margin-left: 10px !important;}
+.bgColorWhite{background-color: white !important;}
+
+.imgDiv{float: left;height: 150px;margin: 5px;}
+.imgBox{height: 150px !important;margin: 5px;}
+.imgBox:hover{cursor: pointer;}
