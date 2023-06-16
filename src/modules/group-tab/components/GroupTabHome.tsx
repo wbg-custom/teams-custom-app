@@ -4,7 +4,7 @@ import { Search24Regular, Add24Regular } from "@fluentui/react-icons";
 import { app, authentication, Context } from "@microsoft/teams-js";
 import { useData } from "@microsoft/teamsfx-react";
 //import { debounce } from "lodash";
-import TestAPIs from "../../../common/constants/TestAPIs"; //"../../../common/constants/TestApis";
+import TestAPIs from "../../../common/constants/TestAPIs";
 import "../../../common/css/Tab.css";
 import "../../../common/css/GroupTabHome.css";
 import { TeamsFxContext } from "../../../common/models/Context"; //"../../../common/models/context";
@@ -20,8 +20,9 @@ function GroupTabHome() {
   const [teamId, setTeamId] = useState("");
   const [channelId, setChannelId] = useState("");
   const [channelName, setChannelName] = useState("");
+  const [createdBy, setCreatedBy] = useState("");
 
-  //const { teamsUserCredential } = useContext(TeamsFxContext);
+  const { teamsUserCredential } = useContext(TeamsFxContext);
   // const { loading, data, error } = useData(async () => {
   //   if (teamsUserCredential) {
   //     const userInfo = await teamsUserCredential.getUserInfo();
@@ -77,9 +78,16 @@ function GroupTabHome() {
         setToken(value);
       });
 
+      if (teamsUserCredential) {
+        const userInfo = teamsUserCredential.getUserInfo();
+        setCreatedBy(userInfo.preferredUserName);
+        console.log('JBR-userInfo.preferredUserName:'+createdBy);
+      }
+
       setChannelId(context.channel.id + "");
       setChannelName(context.channel.displayName + "");
       setTeamId(context.team.groupId + "");
+
       console.log('JBR-Tabcontext: Data set into useState');
 
     });
@@ -119,9 +127,10 @@ function GroupTabHome() {
   //   console.log('JBR-Tabcontext:'+tabContext);
     fillData();
     
-  }, [teamId]);
+  }, [teamId, channelId, token]);
 
   function fillData(){
+    if(teamId == "" || channelId == "" || token == "") return;
     console.log('JBR-msg: filldata() starts');
     setIsDataPhoto(false);
     setGetResponse("");
@@ -169,6 +178,9 @@ function GroupTabHome() {
       formData.append("TeamId", teamId);
       formData.append("ChannelId", channelId);
       formData.append("file", file);
+      formData.append("CreatedBy", createdBy);
+      try{
+        
       fetch(TestAPIs.UploadPhotoUrl, {
         method: "POST",
         headers: {
@@ -184,10 +196,14 @@ function GroupTabHome() {
           setReloadFillData(!reloadFillData);
         })
         .catch((err) => {
-          setResponseMessage(`Response Error: ${err}`);
+          setResponseMessage(`Response Error: ${err.message}`);
           setIsSending(false);
           setReloadFillData(!reloadFillData);
         });
+      }
+      catch(err : any){
+        setResponseMessage(`Response Error: ${err.message}`);
+      }
     }
   };
 
@@ -262,7 +278,7 @@ function GroupTabHome() {
               {/* <Button appearance="primary">Capture Image</Button> */}
                 {
                   isWeb ? (
-                    <CaptureImageWeb channelId={channelId} channelName={channelName} teamId={teamId} />
+                    <CaptureImageWeb channelId={channelId} channelName={channelName} teamId={teamId} createdBy={createdBy} token={token} />
                   ) : <></>
                 }
 

@@ -7,7 +7,9 @@ import { SdkError, media } from "@microsoft/teams-js";//, geoLocation
 import { Text, Button, Image, Card } from "@fluentui/react-components";
 //import CheckAndAlertForCameraPermission from "../helpers/NavigatorPermission";
 import { CardBody } from "reactstrap";
-import { iTabContext } from "../../common/models/Context"
+import { iTabContext } from "../../common/models/Context";
+
+import TestAPIs from "../../common/constants/TestAPIs";
 /**
  * The 'CaptureImageWeb' component
  * of your app.
@@ -20,6 +22,49 @@ const CaptureImageWeb: React.FC<iTabContext> = (props) => {
   const [longitude, setLongitude] = useState('');
   const [accuracy, setAccuracy] = useState('');
   const [isLocation, setIsLocation] = useState(false);
+  const [isSendingCapt, setIsSendingCapt] = useState(false);
+  const [capImgUpRes, setCapImgUpRes] = useState('');
+  
+  const sendCaptureImage = () => {
+    if (isSendingCapt) return;
+    // update state
+    // send the actual request
+    setCapImgUpRes("Loading...");
+    if (!capturedImage) {
+      setCapImgUpRes("Failed! First capture photo.");
+    } else {
+      setIsSendingCapt(true);
+      var formData = new FormData();
+      formData.append("TeamId", props.teamId);
+      formData.append("ChannelId", props.channelId);
+      formData.append("imgB64", capturedImage);
+      formData.append("CreatedBy", props.createdBy);
+      try{
+        
+      fetch(TestAPIs.UploadPhotoB64Url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        },
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((resData) => {
+          console.log(resData);
+          setCapImgUpRes(JSON.stringify(resData));
+          setIsSendingCapt(false);
+        })
+        .catch((err) => {
+          setCapImgUpRes(`Response Error: ${err.message}`);
+          setIsSendingCapt(false);
+        });
+      }
+      catch(err : any){
+        setCapImgUpRes(`Response Error: ${err.message}`);
+      }
+    }
+  };
+
   const getCurrentLocation =()=> {        
       navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
           if (result.state === 'denied') {
@@ -110,6 +155,7 @@ const CaptureImageWeb: React.FC<iTabContext> = (props) => {
             <div>Channel Name: {props.channelName} </div>
             <div>Latitude: {latitude} </div>
             <div>Longitude: {longitude} </div>
+            <div>CreatedBy: {props.createdBy} </div>
             {/*
             {props.channelId} | {props.teamId} | {props.channelName}
              <Text>Checks for permission before capturing image.</Text><br/>
@@ -121,11 +167,14 @@ const CaptureImageWeb: React.FC<iTabContext> = (props) => {
             <Image src={capturedImage} height={100} />
             {
               capturedImage && capturedImage.length > 10 ? (
-                <Button appearance="primary">
+                <Button appearance="primary" onClick={sendCaptureImage}>
                   Upload Capture Image
                 </Button>
                 ) : ( <></> )
             }
+            <div>
+              {capImgUpRes}
+            </div>
           </div>
         </CardBody>
       </Card>
