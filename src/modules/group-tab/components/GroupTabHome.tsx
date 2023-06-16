@@ -17,9 +17,9 @@ function GroupTabHome() {
   const toggleShowUploader = () => {
     setShowUpload(!showUpload);
   };
-  const [teamId, setTeamId] = useState("team001");
-  const [channelId, setChannelId] = useState("channel004");
-  const [channelName, setChannelName] = useState("channel-test");
+  let [teamId, setTeamId] = useState("team001");
+  let [channelId, setChannelId] = useState("channel004");
+  let [channelName, setChannelName] = useState("channel-test");
 
   //const { teamsUserCredential } = useContext(TeamsFxContext);
   // const { loading, data, error } = useData(async () => {

@@ -107,6 +107,9 @@ const CaptureImageWeb: React.FC<iTabContext> = (props) => {
         </Text>
         <CardBody>
           <div className="flex columngap">
+            <div>Channel Name: {props.channelName} </div>
+            <div>Latitude: {latitude} </div>
+            <div>Longitude: {longitude} </div>
             {/*
             {props.channelId} | {props.teamId} | {props.channelName}
              <Text>Checks for permission before capturing image.</Text><br/>
