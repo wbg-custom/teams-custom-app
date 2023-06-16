@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Input, Button, Spinner } from "@fluentui/react-components";
 import { Search24Regular, Add24Regular } from "@fluentui/react-icons";
 import { app, authentication } from "@microsoft/teams-js";
+import { useData } from "@microsoft/teamsfx-react";
 //import { debounce } from "lodash";
 import TestAPIs from "../../../common/constants/TestAPIs"; //"../../../common/constants/TestApis";
 import "../../../common/css/Tab.css";
 import "../../../common/css/GroupTabHome.css";
+import { TeamsFxContext } from "../../../common/models/Context";//"../../../common/models/context";
 
 function GroupTabHome() {
   const [reloadFillData, setReloadFillData] = useState(false);
@@ -16,10 +18,34 @@ function GroupTabHome() {
   const [teamId, setTeamId] = useState("team001");
   const [channelId, setChannelId] = useState("channel004");
 
+  const { teamsUserCredential } = useContext(TeamsFxContext);
+  // const { loading, data, error } = useData(async () => {
+  //   if (teamsUserCredential) {
+  //     const userInfo = await teamsUserCredential.getUserInfo();
+  //     setToken(teamsUserCredential.ssoToken.token);
+  //     return userInfo;
+  //   }
+  // });
+
   const [isWeb, setIsWeb] = useState(false);
   const [tabContext, setTabContext] = useState("");
   useEffect(() => {
-    fillData();
+    try {
+      app.initialize();
+      var context = app.getContext().then((context) => {
+          //setTabContext(JSON.stringify(context));
+          return context;
+      });
+      console.log('JBR-Tabcontext:'+JSON.stringify(context));
+      if (teamsUserCredential) {
+        setToken(teamsUserCredential.ssoToken.token);
+      }
+      //     setChannelId(context.channel.id);
+    //     setTeamId(context.team.groupId);
+      fillData();
+    } catch (err) {
+      console.log("JBR-app.initialize:"+JSON.stringify(err));
+    }
 
     // // initializing microsoft teams sdk
     // app.initialize();
@@ -49,7 +75,7 @@ function GroupTabHome() {
     //       }
     //     });
     //   });
-  }, [reloadFillData]);
+  });
 
   const [token, setToken] = useState("token001");
   const [getResponse, setGetResponse] = useState("");
