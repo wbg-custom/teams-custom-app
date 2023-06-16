@@ -16,4 +16,6 @@ export interface iTabContext{
   teamId: string;
   channelId: string;
   channelName: string;
+  createdBy: string;
+  token: string;
 }
