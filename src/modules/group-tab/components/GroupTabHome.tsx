@@ -103,12 +103,11 @@ function GroupTabHome() {
         setToken(value);
       });
 
-      setTeamId(context.team.groupId + "");
       setChannelId(context.channel.id + "");
       setChannelName(context.channel.displayName + "");
+      setTeamId(context.team.groupId + "");
       console.log('JBR-Tabcontext: Data set into useState');
 
-      fillData();
     });
 
     // // initializing microsoft teams sdk
@@ -140,13 +139,13 @@ function GroupTabHome() {
     //     });
     //   });
   }, []);
-  // useEffect(() => {
+  useEffect(() => {
   //   // setChannelId( JSON.parse(tabContext)["channel"]["id"]);
   //   // setTeamId(tabContext.team.groupId);
   //   console.log('JBR-Tabcontext:'+tabContext);
+    fillData();
     
-    
-  // }, [tabContext]);
+  }, [teamId]);
 
   //const [txtMessage, setTxtMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
