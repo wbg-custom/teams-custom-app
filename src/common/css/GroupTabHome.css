@@ -10,6 +10,8 @@
 button{margin-left: 10px !important;}
 .bgColorWhite{background-color: white !important;}
 
-.imgDiv{float: left;height: 150px;margin: 5px;}
+.imgDiv{float: left;height: 150px;margin: 5px;border: solid 1px white;}
+.imgDiv:hover{cursor: pointer;border: solid 1px rgb(146, 146, 146);}
+.imgDiv a{color: black;}
+.imgDiv a:hover{color: black;}
 .imgBox{height: 150px !important;margin: 5px;}
-.imgBox:hover{cursor: pointer;}
