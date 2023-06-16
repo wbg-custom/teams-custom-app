@@ -35,6 +35,7 @@ function GroupTabHome() {
   const [isDataPhoto, setIsDataPhoto] = useState(false);
 
   const fillData = () => {
+    console.log('JBR-msg: filldata() starts');
     setIsDataPhoto(false);
     setGetResponse("");
     var formData = new FormData();
@@ -92,6 +93,7 @@ function GroupTabHome() {
         console.log('JBR-msg: this is public channel');
       }
       setTabContext(context);
+      console.log('JBR-Tabcontext:'+JSON.stringify(tabContext));
       if (context.app.host.clientType! === "web") {
         setIsWeb(true);
       } else {
@@ -104,7 +106,9 @@ function GroupTabHome() {
       setTeamId(context.team.groupId);
       setChannelId(context.channel.id);
       setChannelName(context.channel.displayName);
+      console.log('JBR-Tabcontext: Data set into useState');
 
+      fillData();
     });
 
     // // initializing microsoft teams sdk
