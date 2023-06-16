@@ -34,32 +34,6 @@ function GroupTabHome() {
   const [dataPhotoList, setDataPhotoList] = useState([]);
   const [isDataPhoto, setIsDataPhoto] = useState(false);
 
-  const fillData = () => {
-    console.log('JBR-msg: filldata() starts');
-    setIsDataPhoto(false);
-    setGetResponse("");
-    var formData = new FormData();
-    formData.append("TeamId", teamId);
-    formData.append("ChannelId", channelId);
-    fetch(TestAPIs.GetPhotoListUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((resData) => {
-        console.log("JBR-GetPhotoList:" + JSON.stringify(resData.value));
-        setDataPhotoList(resData.value);
-        setIsDataPhoto(true);
-      })
-      .catch((err) => {
-        setGetResponse(`Response Error: ${err}`);
-        setIsDataPhoto(true);
-      });
-  };
-
   const [token, setToken] = useState("");
   const [isWeb, setIsWeb] = useState(false);
   const [tabContext, setTabContext] = useState({});
@@ -146,6 +120,32 @@ function GroupTabHome() {
     fillData();
     
   }, [teamId]);
+
+  function fillData(){
+    console.log('JBR-msg: filldata() starts');
+    setIsDataPhoto(false);
+    setGetResponse("");
+    var formData = new FormData();
+    formData.append("TeamId", teamId);
+    formData.append("ChannelId", channelId);
+    fetch(TestAPIs.GetPhotoListUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((resData) => {
+        console.log("JBR-GetPhotoList:" + JSON.stringify(resData.value));
+        setDataPhotoList(resData.value);
+        setIsDataPhoto(true);
+      })
+      .catch((err) => {
+        setGetResponse(`Response Error: ${err}`);
+        setIsDataPhoto(true);
+      });
+  };
 
   //const [txtMessage, setTxtMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
