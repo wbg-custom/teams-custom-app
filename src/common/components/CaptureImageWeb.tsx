@@ -95,27 +95,34 @@ const CaptureImageWeb: React.FC<iTabContext> = (props) => {
     // });
     // navigator.geolocation.getCurrentPosition(success, error, options);
   };
-  
+
     // Method to validate before capturing media
   
-
   return (
     <>
       {/* Card for capturing single image */}
       <Card>
         <Text weight="bold" as="h1">
-          Capture Image - 1
+          Capture Image
         </Text>
         <CardBody>
           <div className="flex columngap">
+            {/*
             {props.channelId} | {props.teamId} | {props.channelName}
-            {/* <Text>Checks for permission before capturing image.</Text><br/>
+             <Text>Checks for permission before capturing image.</Text><br/>
             <Text weight="medium">SDK used: </Text><br/>
             <Text>navigator, microsoftTeams </Text><br/>
             <Text weight="medium">Method: </Text><br/>
             <Text>navigator.mediaDevices.getUserMedia, teams.getmedia</Text><br/> */}
             <Button onClick={deviceCapabilities}>Capture image</Button><br/>
-            <Image src={capturedImage} />
+            <Image src={capturedImage} height={100} />
+            {
+              capturedImage && capturedImage.length > 10 ? (
+                <Button appearance="primary">
+                  Upload Capture Image
+                </Button>
+                ) : ( <></> )
+            }
           </div>
         </CardBody>
       </Card>
