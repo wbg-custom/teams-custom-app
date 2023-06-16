@@ -8,6 +8,8 @@ import TestAPIs from "../../../common/constants/TestAPIs"; //"../../../common/co
 import "../../../common/css/Tab.css";
 import "../../../common/css/GroupTabHome.css";
 import { TeamsFxContext } from "../../../common/models/Context"; //"../../../common/models/context";
+import CaptureImageWeb from "../../../common/components/CaptureImageWeb";
+import CaptureImage from "../../../common/components/CaptureImage";
 
 function GroupTabHome() {
   const [reloadFillData, setReloadFillData] = useState(false);
@@ -17,6 +19,7 @@ function GroupTabHome() {
   };
   const [teamId, setTeamId] = useState("team001");
   const [channelId, setChannelId] = useState("channel004");
+  const [channelName, setChannelName] = useState("channel-test");
 
   const { teamsUserCredential } = useContext(TeamsFxContext);
   // const { loading, data, error } = useData(async () => {
@@ -80,7 +83,7 @@ function GroupTabHome() {
   // }
   useEffect(() => {
     app.initialize();
-    app.getContext().then((context) => {
+    app.getContext().then((context: any) => {
       if (context.channel?.membershipType === "Private") {
         console.log('JBR-msg: this is private channel');
       } else if (context.channel?.membershipType === "Shared") {
@@ -89,6 +92,19 @@ function GroupTabHome() {
         console.log('JBR-msg: this is public channel');
       }
       setTabContext(context);
+      if (context.app.host.clientType! === "web") {
+        setIsWeb(true);
+      } else {
+        setIsWeb(false);
+      }
+      authentication.getAuthToken().then((value: any) => {
+        setToken(value);
+      });
+
+      setTeamId(context.team.groupId);
+      setChannelId(context.channel.id);
+      setChannelName(context.channel.displayName);
+
     });
 
     // // initializing microsoft teams sdk
@@ -120,11 +136,13 @@ function GroupTabHome() {
     //     });
     //   });
   }, []);
-  useEffect(() => {
-    // setChannelId( JSON.parse(tabContext)["channel"]["id"]);
-    // setTeamId(tabContext.team.groupId);
-    console.log('JBR-Tabcontext:'+tabContext);
-  }, [tabContext]);
+  // useEffect(() => {
+  //   // setChannelId( JSON.parse(tabContext)["channel"]["id"]);
+  //   // setTeamId(tabContext.team.groupId);
+  //   console.log('JBR-Tabcontext:'+tabContext);
+    
+    
+  // }, [tabContext]);
 
   //const [txtMessage, setTxtMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -236,7 +254,13 @@ function GroupTabHome() {
               </center>
               <hr></hr>
 
-              <Button appearance="primary">Capture Image</Button>
+              {/* <Button appearance="primary">Capture Image</Button> */}
+                {
+                  isWeb ? (
+                    <CaptureImageWeb channelId={channelId} channelName={channelName} teamId={teamId} />
+                  ) : <></>
+                }
+
               <Button appearance="outline" onClick={() => toggleShowUploader()}>
                 Cancel
               </Button>

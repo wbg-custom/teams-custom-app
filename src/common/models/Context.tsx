@@ -11,3 +11,9 @@ export const TeamsFxContext = createContext<{
   themeString: "",
   teamsUserCredential: undefined,
 });
+
+export interface iTabContext{
+  teamId: string;
+  channelId: string;
+  channelName: string;
+}

@@ -201,7 +201,7 @@ function PersonalTabHome() {
                     </tr>
                     <tr>
                       <td colSpan={4}>
-                        <Segment children={<CaptureImageWeb />} writeKey={""} />
+                        <Segment children={<CaptureImageWeb teamId="team001" channelId="channel001" channelName="" />} writeKey={""} />
                       </td>
                     </tr>
 
