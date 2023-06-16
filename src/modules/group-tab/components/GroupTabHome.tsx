@@ -17,9 +17,9 @@ function GroupTabHome() {
   const toggleShowUploader = () => {
     setShowUpload(!showUpload);
   };
-  let [teamId, setTeamId] = useState("team001");
-  let [channelId, setChannelId] = useState("channel004");
-  let [channelName, setChannelName] = useState("channel-test");
+  const [teamId, setTeamId] = useState("");
+  const [channelId, setChannelId] = useState("");
+  const [channelName, setChannelName] = useState("");
 
   //const { teamsUserCredential } = useContext(TeamsFxContext);
   // const { loading, data, error } = useData(async () => {
@@ -60,7 +60,7 @@ function GroupTabHome() {
       });
   };
 
-  const [token, setToken] = useState("token001");
+  const [token, setToken] = useState("");
   const [isWeb, setIsWeb] = useState(false);
   const [tabContext, setTabContext] = useState({});
   // try {
@@ -103,12 +103,11 @@ function GroupTabHome() {
         setToken(value);
       });
 
-      setTeamId(context.team.groupId + "");
       setChannelId(context.channel.id + "");
       setChannelName(context.channel.displayName + "");
+      setTeamId(context.team.groupId + "");
       console.log('JBR-Tabcontext: Data set into useState');
 
-      fillData();
     });
 
     // // initializing microsoft teams sdk
@@ -140,13 +139,13 @@ function GroupTabHome() {
     //     });
     //   });
   }, []);
-  // useEffect(() => {
+  useEffect(() => {
   //   // setChannelId( JSON.parse(tabContext)["channel"]["id"]);
   //   // setTeamId(tabContext.team.groupId);
   //   console.log('JBR-Tabcontext:'+tabContext);
+    fillData();
     
-    
-  // }, [tabContext]);
+  }, [teamId]);
 
   //const [txtMessage, setTxtMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
