@@ -21,7 +21,7 @@ function GroupTabHome() {
   const [channelId, setChannelId] = useState("channel004");
   const [channelName, setChannelName] = useState("channel-test");
 
-  const { teamsUserCredential } = useContext(TeamsFxContext);
+  //const { teamsUserCredential } = useContext(TeamsFxContext);
   // const { loading, data, error } = useData(async () => {
   //   if (teamsUserCredential) {
   //     const userInfo = await teamsUserCredential.getUserInfo();
@@ -103,9 +103,9 @@ function GroupTabHome() {
         setToken(value);
       });
 
-      setTeamId(context.team.groupId);
-      setChannelId(context.channel.id);
-      setChannelName(context.channel.displayName);
+      setTeamId(context.team.groupId + "");
+      setChannelId(context.channel.id + "");
+      setChannelName(context.channel.displayName + "");
       console.log('JBR-Tabcontext: Data set into useState');
 
       fillData();
@@ -217,7 +217,9 @@ function GroupTabHome() {
           dataPhotoList.map((row, index) => {
             return (
               <div className="imgDiv" key={index}>
-                <img className="imgBox" src={row["fileUrl"]} />
+                <a href={row["fileUrl"]} target="_blank">
+                  <img className="imgBox" src={row["fileUrl"]} />
+                </a>
               </div>
             );
           })
