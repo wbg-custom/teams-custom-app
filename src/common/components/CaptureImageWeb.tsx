@@ -1,73 +1,56 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import { useState } from "react";//useEffect, 
+import React, { useState, useEffect, Component } from "react";//useEffect, 
 //import * as microsoftTeams from "@microsoft/teams-js";
 import { SdkError, media } from "@microsoft/teams-js";//, geoLocation
 import { Text, Button, Image, Card } from "@fluentui/react-components";
 //import CheckAndAlertForCameraPermission from "../helpers/NavigatorPermission";
 import { CardBody } from "reactstrap";
+import { iTabContext } from "../../common/models/Context"
 /**
  * The 'CaptureImageWeb' component
  * of your app.
  */
 
-const CaptureImageWeb = () => {
+const CaptureImageWeb: React.FC<iTabContext> = (props) => {
   //var imageCapture: ImageCapture;
   const [capturedImage, setCapturedImage] = useState("");
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [accuracy, setAccuracy] = useState('');
+  const [isLocation, setIsLocation] = useState(false);
+  const getCurrentLocation =()=> {        
+      navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
+          if (result.state === 'denied') {
+              //setShowComments(true);
+              //return false;
+              setIsLocation(false);
+          }
+          else {
+              //setShowComments(false);
+              setIsLocation(true);
+          }
+      });
+      
+      // Method to ask for image capture permission and then select media
+      navigator.geolocation.getCurrentPosition(function (position) {
+          var coordinates = position.coords;
+          // var location = {
+          //     latitude: coordinates.latitude,
+          //     longitude: coordinates.longitude,
+          // }
+          //setGeoLocationValue(JSON.stringify(location))
+          setLatitude(coordinates.latitude.toString());
+          setLongitude(coordinates.longitude.toString());
+          setAccuracy(coordinates.accuracy.toString());
+      });
+  }
 
-  // useEffect(() => {
-  //   // initializing microsoft teams sdk
-  //   microsoftTeams.app.initialize();
-  // });
-  // // Method to validate before capturing media
-  // function captureMedia() {
-  //     // Method to ask for image capture permission and then select media
-  //     CheckAndAlertForCameraPermission();
-  //     // navigator.mediaDevices.getUserMedia({ video: true })
-  //     //     .then(mediaStream => {
-  //     //         const track = mediaStream.getVideoTracks()[0];
-  //     //         imageCapture = new ImageCapture(track);
-  //     //         imageCapture.takePhoto()
-  //     //             .then((blob: Blob | MediaSource) => {
-  //     //                 setCapturedImage(URL.createObjectURL(blob));
-  //     //             })
-  //     //     })
-  //     //     .catch(error => console.log(error));
-  //     let mimeType = "jpeg";
-  //         microsoftTeams.media.captureImage((error, files) => {
-  //             // If there's any error, an alert shows the error message/code
-  //             if (error) {
-  //                 if (error.message) {
-  //                     alert(" ErrorCode: " + error.errorCode + error.message);
-  //                 } else {
-  //                     alert(" ErrorCode: " + error.errorCode);
-  //                 }
-  //             } else if (files) {
-  //                 var image = files[0].content;
-  //                 // Adding this image string in src attr of image tag will display the image on web page.
-  //                 let imageString = "data:" + mimeType + ";base64," + image;
-  //                 setCapturedImage(imageString);
-  //             }
-  //         });
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
 
-  // }
-
-//   const options = {
-//     enableHighAccuracy: true,
-//     timeout: 5000,
-//     maximumAge: 0,
-//   };
-//   function success(pos: any) {
-//     const crd = pos.coords;
-//     console.log("Your current position is:");
-//     console.log(`Latitude : ${crd.latitude}`);
-//     console.log(`Longitude: ${crd.longitude}`);
-//     console.log(`More or less ${crd.accuracy} meters.`);
-//   }
-//   function error(err: any) {
-//     console.warn(`ERROR(${err.code}): ${err.message}`);
-//   }
   const deviceCapabilities = () => {
     // navigator.permissions.query({ name: "geolocation" }).then(function (result) {
     //   console.log("geolocation permission:", result.state);
@@ -112,6 +95,9 @@ const CaptureImageWeb = () => {
     // });
     // navigator.geolocation.getCurrentPosition(success, error, options);
   };
+  
+    // Method to validate before capturing media
+  
 
   return (
     <>
@@ -122,12 +108,12 @@ const CaptureImageWeb = () => {
         </Text>
         <CardBody>
           <div className="flex columngap">
-            <Text>Checks for permission before capturing image.</Text><br/>
-
+            {props.channelId} | {props.teamId} | {props.channelName}
+            {/* <Text>Checks for permission before capturing image.</Text><br/>
             <Text weight="medium">SDK used: </Text><br/>
             <Text>navigator, microsoftTeams </Text><br/>
             <Text weight="medium">Method: </Text><br/>
-            <Text>navigator.mediaDevices.getUserMedia, teams.getmedia</Text><br/>
+            <Text>navigator.mediaDevices.getUserMedia, teams.getmedia</Text><br/> */}
             <Button onClick={deviceCapabilities}>Capture image</Button><br/>
             <Image src={capturedImage} />
           </div>
