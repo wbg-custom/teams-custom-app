@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Input, Button, Spinner } from "@fluentui/react-components";
 import { Search24Regular, Add24Regular } from "@fluentui/react-icons";
-import { app, authentication } from "@microsoft/teams-js";
+import { app, authentication, Context } from "@microsoft/teams-js";
 import { useData } from "@microsoft/teamsfx-react";
 //import { debounce } from "lodash";
 import TestAPIs from "../../../common/constants/TestAPIs"; //"../../../common/constants/TestApis";
 import "../../../common/css/Tab.css";
 import "../../../common/css/GroupTabHome.css";
-import { TeamsFxContext } from "../../../common/models/Context";//"../../../common/models/context";
+import { TeamsFxContext } from "../../../common/models/Context"; //"../../../common/models/context";
 
 function GroupTabHome() {
   const [reloadFillData, setReloadFillData] = useState(false);
@@ -27,25 +27,69 @@ function GroupTabHome() {
   //   }
   // });
 
-  const [isWeb, setIsWeb] = useState(false);
-  const [tabContext, setTabContext] = useState("");
-  useEffect(() => {
-    try {
-      app.initialize();
-      var context = app.getContext().then((context) => {
-          //setTabContext(JSON.stringify(context));
-          return context;
+  const [getResponse, setGetResponse] = useState("");
+  const [dataPhotoList, setDataPhotoList] = useState([]);
+  const [isDataPhoto, setIsDataPhoto] = useState(false);
+
+  const fillData = () => {
+    setIsDataPhoto(false);
+    setGetResponse("");
+    var formData = new FormData();
+    formData.append("TeamId", teamId);
+    formData.append("ChannelId", channelId);
+    fetch(TestAPIs.GetPhotoListUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((resData) => {
+        console.log("JBR-GetPhotoList:" + JSON.stringify(resData.value));
+        setDataPhotoList(resData.value);
+        setIsDataPhoto(true);
+      })
+      .catch((err) => {
+        setGetResponse(`Response Error: ${err}`);
+        setIsDataPhoto(true);
       });
-      console.log('JBR-Tabcontext:'+JSON.stringify(context));
-      if (teamsUserCredential) {
-        setToken(teamsUserCredential.ssoToken.token);
+  };
+
+  const [token, setToken] = useState("token001");
+  const [isWeb, setIsWeb] = useState(false);
+  const [tabContext, setTabContext] = useState({});
+  // try {
+  //   app.initialize();
+  //   const context = await app.getContext();
+  //   // const context = app.getContext().then((context) => {
+  //   //     //setTabContext(JSON.stringify(context));
+  //   //     setTabContext(context);
+  //   //     return context;
+  //   // });
+
+  //   console.log('JBR-Tabcontext:'+JSON.stringify(context));
+  //   if (teamsUserCredential) {
+  //     setToken(teamsUserCredential.ssoToken.token);
+  //   }
+  //   //     setChannelId(context.channel.id);
+  // //     setTeamId(context.team.groupId);
+  //   fillData();
+  // } catch (err) {
+  //   console.log("JBR-app.initialize:"+JSON.stringify(err));
+  // }
+  useEffect(() => {
+    app.initialize();
+    app.getContext().then((context) => {
+      if (context.channel?.membershipType === "Private") {
+        console.log('JBR-msg: this is private channel');
+      } else if (context.channel?.membershipType === "Shared") {
+        console.log('JBR-msg: this is shared channel');
+      } else {
+        console.log('JBR-msg: this is public channel');
       }
-      //     setChannelId(context.channel.id);
-    //     setTeamId(context.team.groupId);
-      fillData();
-    } catch (err) {
-      console.log("JBR-app.initialize:"+JSON.stringify(err));
-    }
+      setTabContext(context);
+    });
 
     // // initializing microsoft teams sdk
     // app.initialize();
@@ -75,66 +119,41 @@ function GroupTabHome() {
     //       }
     //     });
     //   });
-  });
+  }, []);
+  useEffect(() => {
+    // setChannelId( JSON.parse(tabContext)["channel"]["id"]);
+    // setTeamId(tabContext.team.groupId);
+    console.log('JBR-Tabcontext:'+tabContext);
+  }, [tabContext]);
 
-  const [token, setToken] = useState("token001");
-  const [getResponse, setGetResponse] = useState("");
-  const [dataPhotoList, setDataPhotoList] = useState([]);
-  const [isDataPhoto, setIsDataPhoto] = useState(false);
-
-  const fillData = () => {
-      setIsDataPhoto(false);
-      setGetResponse("");
-      var formData = new FormData();
-      formData.append("TeamId",teamId);
-      formData.append("ChannelId",channelId);
-      fetch(TestAPIs.GetPhotoListUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData
-      }).then((response) => response.json())
-        .then((resData) => {
-          console.log("JBR-GetPhotoList:"+JSON.stringify(resData.value));
-          setDataPhotoList(resData.value);
-          setIsDataPhoto(true);
-        })
-        .catch((err) => {
-            setGetResponse(`Response Error: ${err}`);
-            setIsDataPhoto(true);
-        });
-
-  };
-
-  const [txtMessage, setTxtMessage] = useState("");
+  //const [txtMessage, setTxtMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
   const [file, setFile] = useState();
-    function handlePhotoSelect(e: any) {
-        console.log(e.target.files);
-        //setFile(URL.createObjectURL(e.target.files[0]));
-        setFile(e.target.files[0]);
-    }
+  function handlePhotoSelect(e: any) {
+    console.log(e.target.files);
+    //setFile(URL.createObjectURL(e.target.files[0]));
+    setFile(e.target.files[0]);
+  }
   const sendRequest = () => {
     if (isSending) return;
     // update state
     // send the actual request
-    setResponseMessage('Loading...');
+    setResponseMessage("Loading...");
     if (!file) {
       setResponseMessage("Failed! First select file.");
     } else {
       setIsSending(true);
       var formData = new FormData();
-      formData.append("TeamId",teamId);
-      formData.append("ChannelId",channelId);
-      formData.append("file",file);
+      formData.append("TeamId", teamId);
+      formData.append("ChannelId", channelId);
+      formData.append("file", file);
       fetch(TestAPIs.UploadPhotoUrl, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: formData
+        body: formData,
       })
         .then((response) => response.json())
         .then((resData) => {
@@ -170,22 +189,19 @@ function GroupTabHome() {
         </div>
       </div>
       <div className="narrow bgColorWhite">
-        {
-            !isDataPhoto ? (
-                <Spinner/>
-            ) : (
-                dataPhotoList ? (
-                dataPhotoList.map((row, index) => {
-                    return(
-                        <div className="imgDiv" key={index}>
-                            <img className="imgBox" src={row['fileUrl']}/>
-                        </div>
-                    )
-                })) : (
-                    <div></div>
-                )
-            )
-        }
+        {!isDataPhoto ? (
+          <Spinner />
+        ) : dataPhotoList ? (
+          dataPhotoList.map((row, index) => {
+            return (
+              <div className="imgDiv" key={index}>
+                <img className="imgBox" src={row["fileUrl"]} />
+              </div>
+            );
+          })
+        ) : (
+          <div></div>
+        )}
         {getResponse}
       </div>
       {showUpload ? (
@@ -198,26 +214,21 @@ function GroupTabHome() {
               <input type="file" onChange={handlePhotoSelect} />
             </div>
             <div className="popupContent">
-              {
-                isSending ? (
+              {isSending ? (
                 <Button appearance="primary" disabled>
-                    Upload
-                 </Button>
-                ):
-                (
+                  Upload
+                </Button>
+              ) : (
                 <Button appearance="primary" onClick={() => sendRequest()}>
-                    Upload
-                 </Button>
-                )
-              }
+                  Upload
+                </Button>
+              )}
               <Button appearance="outline" onClick={() => toggleShowUploader()}>
                 Cancel
-                </Button>
-              <br/>
+              </Button>
+              <br />
 
-              {
-                responseMessage !== "" ? `Response: ${responseMessage}` : ""
-              }
+              {responseMessage !== "" ? `Response: ${responseMessage}` : ""}
 
               <hr></hr>
               <center>
@@ -229,7 +240,6 @@ function GroupTabHome() {
               <Button appearance="outline" onClick={() => toggleShowUploader()}>
                 Cancel
               </Button>
-
             </div>
           </div>
         </div>
