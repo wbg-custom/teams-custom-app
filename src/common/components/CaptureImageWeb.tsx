@@ -118,7 +118,7 @@ const CaptureImageWeb: React.FC<iTabContext> = (props) => {
     //navigator.mediaDevices.getUserMedia({ audio: true, video: true });
     let mediaInput: media.MediaInputs = {
       mediaType: media.MediaType.Image,
-      maxMediaCount: 10,
+      maxMediaCount: 1,
       imageProps: imageProp,
     };
     media.selectMedia(

@@ -210,6 +210,14 @@ function PersonalTabHome() {
                         <Segment children={<CaptureVideoWeb />} writeKey={""} />
                       </td>
                     </tr>
+                    <tr>
+                      <td colSpan={4}>
+                        <Segment
+                          children={<CaptureImageVideoApp />}
+                          writeKey={""}
+                        />
+                      </td>
+                    </tr>
                   </>
                 ) : (
                   <>
