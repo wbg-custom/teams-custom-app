@@ -35,19 +35,25 @@ const CaptureImageWeb: React.FC<iTabContext> = (props) => {
       setCapImgUpRes("Failed! First capture photo.");
     } else {
       setIsSendingCapt(true);
-      var formData = new FormData();
-      formData.append("TeamId", props.teamId);
-      formData.append("ChannelId", props.channelId);
-      formData.append("base64", imgBase64);
-      formData.append("CreatedBy", props.createdBy);
+      // var formData = new FormData();
+      // formData.append("TeamId", props.teamId);
+      // formData.append("ChannelId", props.channelId);
+      // formData.append("base64", imgBase64);
+      // formData.append("CreatedBy", props.createdBy);
+      var data = {
+        'TeamId' : props.teamId,
+        'ChannelId' : props.channelId,
+        'base64': imgBase64,
+        'CreatedBy': props.createdBy
+      }
       try {
         fetch(TestAPIs.UploadPhotoB64Url, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${props.token}`,
-            "content-type": ""
+            "content-type": "application/json"
           },
-          body: formData,
+          body: JSON.stringify(data),
         })
           .then((response) => response.json())
           .then((resData) => {
