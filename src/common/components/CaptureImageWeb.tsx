@@ -37,7 +37,7 @@ const CaptureImageWeb: React.FC<iTabContext> = (props) => {
       var formData = new FormData();
       formData.append("TeamId", props.teamId);
       formData.append("ChannelId", props.channelId);
-      formData.append("imgB64", capturedImage);
+      formData.append("base64", capturedImage);
       formData.append("CreatedBy", props.createdBy);
       try{
         
