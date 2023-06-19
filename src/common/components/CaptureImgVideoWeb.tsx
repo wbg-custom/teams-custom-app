@@ -63,9 +63,11 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
     // navigator.permissions.query({ name: "geolocation" }).then(function (result) {
     //   console.log("geolocation permission:", result.state);
     // });
-    let imageProp: media.VideoProps  = {
-      sources: [media.Source.Camera, media.Source.Gallery],
-      startMode: media.CameraStartMode.Photo,
+    let videoProps: media.VideoProps  = {
+    //   sources: [media.Source.Camera, media.Source.Gallery],
+    //   startMode: media.CameraStartMode.Photo,
+      isFullScreenMode: true,
+      isStopButtonVisible: true,
       cameraSwitcher: true,
       maxDuration: 30
     };
@@ -73,7 +75,7 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
     let mediaInput: media.MediaInputs = {
       mediaType: media.MediaType.Video,
       maxMediaCount: 6,
-      imageProps: imageProp,
+      videoProps: videoProps,
     };
     media.selectMedia(
       mediaInput,
