@@ -81,7 +81,7 @@ function GroupTabHome() {
       if (teamsUserCredential) {
         const userInfo = teamsUserCredential.getUserInfo();
         setCreatedBy(userInfo.preferredUserName);
-        console.log('JBR-userInfo.preferredUserName:'+createdBy);
+        console.log('JBR-userInfo:'+JSON.stringify(userInfo));
       }
 
       setChannelId(context.channel.id + "");
