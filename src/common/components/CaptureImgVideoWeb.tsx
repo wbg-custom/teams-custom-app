@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Component } from "react"; //useEffect,
 import { Text, Button, Image, Card } from "@fluentui/react-components";
 import { CardBody } from "reactstrap";
-import * as microsoftTeams from "@microsoft/teams-js";
+import { SdkError, media } from "@microsoft/teams-js"; //, geoLocation
 
 import { iTabContext } from "../../common/models/Context";
 import TestAPIs from "../../common/constants/TestAPIs";
@@ -59,22 +59,57 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
   };
 
   
-  const openCamera = () => {
-    const defaultVideoAndImageProps: microsoftTeams.media.VideoAndImageProps = {
-        sources: [microsoftTeams.media.Source.Camera, microsoftTeams.media.Source.Gallery],
-        startMode: microsoftTeams.media.CameraStartMode.Photo,
-        ink: true,
-        cameraSwitcher: true,
-        textSticker: true,
-        enableFilter: true,
-        maxDuration: 30
-      }
-      const defaultVideoAndImageMediaInput: microsoftTeams.media.MediaInputs = {
-        mediaType: microsoftTeams.media.MediaType.VideoAndImage,
-        maxMediaCount: 6,
-        videoAndImageProps: defaultVideoAndImageProps
-      }
-  }
+  const deviceCapabilities = () => {
+    // navigator.permissions.query({ name: "geolocation" }).then(function (result) {
+    //   console.log("geolocation permission:", result.state);
+    // });
+    let imageProp: media.VideoAndImageProps  = {
+      sources: [media.Source.Camera, media.Source.Gallery],
+      startMode: media.CameraStartMode.Photo,
+      ink: true,
+      cameraSwitcher: true,
+      textSticker: true,
+      enableFilter: true,
+      maxDuration: 30
+    };
+    //navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+    let mediaInput: media.MediaInputs = {
+      mediaType: media.MediaType.VideoAndImage,
+      maxMediaCount: 6,
+      imageProps: imageProp,
+    };
+    media.selectMedia(
+      mediaInput,
+      (error: SdkError, attachments: media.Media[]) => {
+        if (error) {
+          if (error.message) {
+            alert(" ErrorCode: " + error.errorCode + error.message);
+          } else {
+            alert(" ErrorCode: " + error.errorCode);
+          }
+        }
+        if (attachments) {
+        //   let y = attachments[0];
+        //   let imageString = y.mimeType + ";base64," + y.preview;
+        attachments[0].getMedia((error: SdkError, blob: Blob) => {
+            if (blob) {
+                if (blob.type.includes("video")) {
+                    //videoElement.setAttribute("src", URL.createObjectURL(blob));
+                    setCapturedVideo(URL.createObjectURL(blob));
+                }
+                else{
+                    setCapturedImage(blob.type + ";base64," + URL.createObjectURL(blob));
+                }
+            }
+        });
+        }
+    });
+    // console.log("isSupported", geoLocation.isSupported());
+    // geoLocation.getCurrentLocation().then((result) => {
+    //   console.log("getCurrentLocation", result);
+    // });
+    // navigator.geolocation.getCurrentPosition(success, error, options);
+  };
 
     return (
         <>
@@ -84,7 +119,7 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
           </Text>
           <CardBody>
             <div className="flex columngap"></div>
-            <Button onClick={openCamera}>Capture image or video</Button>
+            <Button onClick={deviceCapabilities}>Capture image or video</Button>
             <br />
             <Image src={capturedImage} />
             <video src={capturedVideo}></video>

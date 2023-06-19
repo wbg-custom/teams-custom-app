@@ -14,6 +14,7 @@ import CaptureImage from "../../../common/components/CaptureImage";
 import CaptureImageWeb from "../../../common/components/CaptureImageWeb";
 import CaptureImageVideoApp from "../../../common/components/CaptureImageVideoApp";
 import CaptureVideoWeb from "../../../common/components/CaptureVideoWeb";
+import CaptureImgVideoWeb from "../../../common/components/CaptureImgVideoWeb";
 
 function PersonalTabHome() {
   const [isWeb, setIsWeb] = useState(false);
@@ -213,7 +214,7 @@ function PersonalTabHome() {
                     <tr>
                       <td colSpan={4}>
                         <Segment
-                          children={<CaptureImageVideoApp />}
+                          children={<CaptureImgVideoWeb teamId={""} channelId={""} channelName={""} createdBy={""} token={""} />}
                           writeKey={""}
                         />
                       </td>
