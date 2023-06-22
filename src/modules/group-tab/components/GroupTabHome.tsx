@@ -10,12 +10,19 @@ import "../../../common/css/GroupTabHome.css";
 import { TeamsFxContext } from "../../../common/models/Context"; //"../../../common/models/context";
 import CaptureImageWeb from "../../../common/components/CaptureImageWeb";
 import CaptureImage from "../../../common/components/CaptureImage";
+import CaptureImgVideoWeb from "../../../common/components/CaptureImgVideoWeb";
 
 function GroupTabHome() {
   const [reloadFillData, setReloadFillData] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
+  const [showVideoUpload, setShowVideoUpload] = useState(false);
   const toggleShowUploader = () => {
     setShowUpload(!showUpload);
+    setShowVideoUpload(false);
+  };
+  const toggleShowVideoUploader = () => {
+    setShowUpload(false);
+    setShowVideoUpload(!showVideoUpload);
   };
   const [teamId, setTeamId] = useState("");
   const [channelId, setChannelId] = useState("");
@@ -61,14 +68,14 @@ function GroupTabHome() {
     app.initialize();
     app.getContext().then((context: any) => {
       if (context.channel?.membershipType === "Private") {
-        console.log('JBR-msg: this is private channel');
+        console.log("JBR-msg: this is private channel");
       } else if (context.channel?.membershipType === "Shared") {
-        console.log('JBR-msg: this is shared channel');
+        console.log("JBR-msg: this is shared channel");
       } else {
-        console.log('JBR-msg: this is public channel');
+        console.log("JBR-msg: this is public channel");
       }
       setTabContext(context);
-      console.log('JBR-Tabcontext:'+JSON.stringify(tabContext));
+      console.log("JBR-Tabcontext:" + JSON.stringify(tabContext));
       if (context.app.host.clientType! === "web") {
         setIsWeb(true);
       } else {
@@ -81,15 +88,14 @@ function GroupTabHome() {
       if (teamsUserCredential) {
         const userInfo = teamsUserCredential.getUserInfo();
         setCreatedBy(userInfo.preferredUserName);
-        console.log('JBR-userInfo:'+JSON.stringify(userInfo));
+        console.log("JBR-userInfo:" + JSON.stringify(userInfo));
       }
 
       setChannelId(context.channel.id + "");
       setChannelName(context.channel.displayName + "");
       setTeamId(context.team.groupId + "");
 
-      console.log('JBR-Tabcontext: Data set into useState');
-
+      console.log("JBR-Tabcontext: Data set into useState");
     });
 
     // // initializing microsoft teams sdk
@@ -122,16 +128,15 @@ function GroupTabHome() {
     //   });
   }, []);
   useEffect(() => {
-  //   // setChannelId( JSON.parse(tabContext)["channel"]["id"]);
-  //   // setTeamId(tabContext.team.groupId);
-  //   console.log('JBR-Tabcontext:'+tabContext);
+    //   // setChannelId( JSON.parse(tabContext)["channel"]["id"]);
+    //   // setTeamId(tabContext.team.groupId);
+    //   console.log('JBR-Tabcontext:'+tabContext);
     fillData();
-    
   }, [teamId, channelId, token]);
 
-  function fillData(){
-    if(teamId == "" || channelId == "" || token == "") return;
-    console.log('JBR-msg: filldata() starts');
+  function fillData() {
+    if (teamId == "" || channelId == "" || token == "") return;
+    console.log("JBR-msg: filldata() starts");
     setIsDataPhoto(false);
     setGetResponse("");
     var formData = new FormData();
@@ -154,7 +159,7 @@ function GroupTabHome() {
         setGetResponse(`Response Error: ${err}`);
         setIsDataPhoto(true);
       });
-  };
+  }
 
   //const [txtMessage, setTxtMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -179,29 +184,27 @@ function GroupTabHome() {
       formData.append("ChannelId", channelId);
       formData.append("file", file);
       formData.append("CreatedBy", createdBy);
-      try{
-        
-      fetch(TestAPIs.UploadPhotoUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((resData) => {
-          console.log(resData);
-          setResponseMessage(JSON.stringify(resData));
-          setIsSending(false);
-          setReloadFillData(!reloadFillData);
+      try {
+        fetch(TestAPIs.UploadPhotoUrl, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
         })
-        .catch((err) => {
-          setResponseMessage(`Response Error: ${err.message}`);
-          setIsSending(false);
-          setReloadFillData(!reloadFillData);
-        });
-      }
-      catch(err : any){
+          .then((response) => response.json())
+          .then((resData) => {
+            console.log(resData);
+            setResponseMessage(JSON.stringify(resData));
+            setIsSending(false);
+            setReloadFillData(!reloadFillData);
+          })
+          .catch((err) => {
+            setResponseMessage(`Response Error: ${err.message}`);
+            setIsSending(false);
+            setReloadFillData(!reloadFillData);
+          });
+      } catch (err: any) {
         setResponseMessage(`Response Error: ${err.message}`);
       }
     }
@@ -219,9 +222,16 @@ function GroupTabHome() {
             icon={<Add24Regular />}
             iconPosition="before"
             appearance="primary"
-            onClick={() => toggleShowUploader()}
-          >
+            onClick={() => toggleShowUploader()}>
             Upload
+          </Button>
+          &nbsp;
+          <Button
+            icon={<Add24Regular />}
+            iconPosition="before"
+            appearance="primary"
+            onClick={() => toggleShowVideoUploader()}>
+            Capture Videos
           </Button>
         </div>
       </div>
@@ -276,11 +286,17 @@ function GroupTabHome() {
               <hr></hr>
 
               {/* <Button appearance="primary">Capture Image</Button> */}
-                {
-                  isWeb ? (
-                    <CaptureImageWeb channelId={channelId} channelName={channelName} teamId={teamId} createdBy={createdBy} token={token} />
-                  ) : <></>
-                }
+              {isWeb ? (
+                <CaptureImageWeb
+                  channelId={channelId}
+                  channelName={channelName}
+                  teamId={teamId}
+                  createdBy={createdBy}
+                  token={token}
+                />
+              ) : (
+                <></>
+              )}
 
               <Button appearance="outline" onClick={() => toggleShowUploader()}>
                 Cancel
@@ -289,6 +305,35 @@ function GroupTabHome() {
           </div>
         </div>
       ) : null}
+
+      {showVideoUpload ? (
+        <div className="popupArea">
+        <div className="popupBody">
+          <div className="popupTitle">
+            <h4> Capture Video </h4>
+          </div>
+          <hr></hr>
+
+              <CaptureImgVideoWeb
+                channelId={channelId}
+                channelName={channelName}
+                teamId={teamId}
+                createdBy={createdBy}
+                token={token}
+              />
+
+            <Button appearance="outline" onClick={() => toggleShowVideoUploader()}>
+              Cancel
+            </Button>
+            
+            <br />
+
+            {responseMessage !== "" ? `Response: ${responseMessage}` : ""}
+          </div>
+        </div>
+      ): null}
+
+      
     </div>
   );
 }
