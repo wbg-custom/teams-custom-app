@@ -63,11 +63,11 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
     //   console.log("geolocation permission:", result.state);
     // });
 
-    let videoControllerCallback: media.VideoControllerCallback = {
-      onRecordingStarted() {
-        alert('onRecordingStarted Callback Invoked');
-      },
-    };
+    // let videoControllerCallback: media.VideoControllerCallback = {
+    //   onRecordingStarted() {
+    //     alert('onRecordingStarted Callback Invoked');
+    //   },
+    // };
 
     let videoProps: media.VideoProps  = {
     // //   sources: [media.Source.Camera, media.Source.Gallery],
@@ -79,7 +79,7 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
       maxDuration: 30, // the maximumDuration is the time in seconds after which the recording should terminate automatically. This value can be changed.
       isFullScreenMode: true,
       isStopButtonVisible: false,
-      videoController: new media.VideoController(videoControllerCallback)
+      //videoController: new media.VideoController(videoControllerCallback)
     };
     //navigator.mediaDevices.getUserMedia({ audio: true, video: true });
     let mediaInput: media.MediaInputs = {
