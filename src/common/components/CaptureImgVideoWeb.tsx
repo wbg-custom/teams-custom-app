@@ -10,10 +10,10 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
     
   const [capturedImage, setCapturedImage] = useState("");
   const [capturedVideo, setCapturedVideo] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [accuracy, setAccuracy] = useState("");
-  const [isLocation, setIsLocation] = useState(false);
+  // const [latitude, setLatitude] = useState("");
+  // const [longitude, setLongitude] = useState("");
+  // const [accuracy, setAccuracy] = useState("");
+  // const [isLocation, setIsLocation] = useState(false);
   const [isSendingCapt, setIsSendingCapt] = useState(false);
   const [capImgUpRes, setCapImgUpRes] = useState("");
   const [imgBase64, setImgBase64] = useState("");
@@ -24,7 +24,7 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
     // send the actual request
     setCapImgUpRes("Loading...");
     if (!imgBase64 || imgBase64 == '') {
-      setCapImgUpRes("Failed! First capture photo.");
+      setCapImgUpRes("Failed! First capture video.");
     } else {
       setIsSendingCapt(true);
       var data = {
@@ -59,24 +59,39 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
   };
 
   
-  const deviceCapabilities = () => {
     // navigator.permissions.query({ name: "geolocation" }).then(function (result) {
     //   console.log("geolocation permission:", result.state);
     // });
+
+    let videoControllerCallback: media.VideoControllerCallback = {
+      onRecordingStarted() {
+        alert('onRecordingStarted Callback Invoked');
+      },
+    };
+
     let videoProps: media.VideoProps  = {
-    //   sources: [media.Source.Camera, media.Source.Gallery],
-    //   startMode: media.CameraStartMode.Photo,
+    // //   sources: [media.Source.Camera, media.Source.Gallery],
+    // //   startMode: media.CameraStartMode.Photo,
+    //   isFullScreenMode: true,
+    //   isStopButtonVisible: true,
+    //   cameraSwitcher: true,
+    //   maxDuration: 30
+      maxDuration: 30, // the maximumDuration is the time in seconds after which the recording should terminate automatically. This value can be changed.
       isFullScreenMode: true,
-      isStopButtonVisible: true,
-      cameraSwitcher: true,
-      maxDuration: 30
+      isStopButtonVisible: false,
+      videoController: new media.VideoController(videoControllerCallback)
     };
     //navigator.mediaDevices.getUserMedia({ audio: true, video: true });
     let mediaInput: media.MediaInputs = {
+      // mediaType: media.MediaType.Video,
+      // maxMediaCount: 6,
+      // videoProps: videoProps,
       mediaType: media.MediaType.Video,
-      maxMediaCount: 6,
-      videoProps: videoProps,
+      maxMediaCount: 1,
+      videoProps: videoProps
     };
+
+  const deviceCapabilities = () => {
     media.selectMedia(
       mediaInput,
       (error: SdkError, attachments: media.Media[]) => {
