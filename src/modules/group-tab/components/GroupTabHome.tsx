@@ -214,10 +214,10 @@ function GroupTabHome() {
     <div className="welcome page">
       <div className="narrow page-padding">
         <h1>Welcome to WBG Photos QA Tab</h1>
-        <div className="searchTxtCls">
+        <div className="searchTxt55Cls">
           <Input contentAfter={<Search24Regular />} />
         </div>
-        <div className="searchBtnCls">
+        <div className="searchBtn15Cls">
           <Button
             icon={<Add24Regular />}
             iconPosition="before"
@@ -225,7 +225,8 @@ function GroupTabHome() {
             onClick={() => toggleShowUploader()}>
             Upload
           </Button>
-          &nbsp;
+        </div>
+        <div className="searchBtn25Cls">
           <Button
             icon={<Add24Regular />}
             iconPosition="before"
