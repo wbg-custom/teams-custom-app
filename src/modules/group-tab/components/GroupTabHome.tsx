@@ -11,6 +11,7 @@ import { TeamsFxContext } from "../../../common/models/Context"; //"../../../com
 import CaptureImageWeb from "../../../common/components/CaptureImageWeb";
 import CaptureImage from "../../../common/components/CaptureImage";
 import CaptureImgVideoWeb from "../../../common/components/CaptureImgVideoWeb";
+import CaptureVideo from "../../../common/components/CaptureVideo";
 
 function GroupTabHome() {
   const [reloadFillData, setReloadFillData] = useState(false);
@@ -274,7 +275,7 @@ function GroupTabHome() {
                 </Button>
               )}
               <Button appearance="outline" onClick={() => toggleShowUploader()}>
-                Cancel
+                Close
               </Button>
               <br />
 
@@ -300,7 +301,7 @@ function GroupTabHome() {
               )}
 
               <Button appearance="outline" onClick={() => toggleShowUploader()}>
-                Cancel
+                Close
               </Button>
             </div>
           </div>
@@ -315,7 +316,7 @@ function GroupTabHome() {
           </div>
           <hr></hr>
 
-              <CaptureImgVideoWeb
+              <CaptureVideo
                 channelId={channelId}
                 channelName={channelName}
                 teamId={teamId}
@@ -324,7 +325,7 @@ function GroupTabHome() {
               />
 
             <Button appearance="outline" onClick={() => toggleShowVideoUploader()}>
-              Cancel
+              Close
             </Button>
             
             <br />
