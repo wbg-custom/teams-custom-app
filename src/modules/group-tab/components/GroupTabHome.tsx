@@ -7,7 +7,7 @@ import { useData } from "@microsoft/teamsfx-react";
 import TestAPIs from "../../../common/constants/TestAPIs";
 import "../../../common/css/Tab.css";
 import "../../../common/css/GroupTabHome.css";
-import { TeamsFxContext } from "../../../common/models/Context"; //"../../../common/models/context";
+import { TeamsFxContext, iPhotoList } from "../../../common/models/Context"; //"../../../common/models/context";
 import CaptureImageWeb from "../../../common/components/CaptureImageWeb";
 import CaptureImage from "../../../common/components/CaptureImage";
 import CaptureImgVideoWeb from "../../../common/components/CaptureImgVideoWeb";
@@ -40,7 +40,7 @@ function GroupTabHome() {
   // });
 
   const [getResponse, setGetResponse] = useState("");
-  const [dataPhotoList, setDataPhotoList] = useState([]);
+  const [dataPhotoList, setDataPhotoList] = useState<iPhotoList[]>([]);
   const [isDataPhoto, setIsDataPhoto] = useState(false);
 
   const [token, setToken] = useState("");
@@ -244,9 +244,19 @@ function GroupTabHome() {
           dataPhotoList.map((row, index) => {
             return (
               <div className="imgDiv" key={index}>
-                <a href={row["fileUrl"]} target="_blank">
+                <a href={row.fileUrl} target="_blank">
                   <img className="imgBox" src={row["fileUrl"]} />
                 </a>
+                {
+                  row.tags?.map((subRow: string, subIndex: number) => {
+                    return(
+                      <div className="tagCls">
+                        {subRow}
+                      </div>
+                    );
+                  })
+                }
+                <div className="clearBoth"></div>
               </div>
             );
           })
