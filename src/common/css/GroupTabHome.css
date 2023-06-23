@@ -17,5 +17,5 @@ button{margin-left: 10px !important;}
 .imgDiv a:hover{color: black;}
 .imgBox{height: 150px !important;margin: 5px;}
 
-.tagCls{float:left;padding:5px;background-color:dimgray;color:black;}
+.tagCls{padding:5px;background-color:dimgray;color:white;margin: 5px;}
 .clearBoth{clear: both;}
