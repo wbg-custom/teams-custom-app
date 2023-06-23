@@ -327,7 +327,9 @@ function GroupTabHome() {
             <h4> Capture Video </h4>
           </div>
           <hr></hr>
-
+          <Segment
+          /* Component to capture video */
+          children={
               <CaptureVideo
                 channelId={channelId}
                 channelName={channelName}
@@ -335,7 +337,8 @@ function GroupTabHome() {
                 createdBy={createdBy}
                 token={token}
               />
-
+          } writeKey={''}
+          />
             <Button appearance="outline" onClick={() => toggleShowVideoUploader()}>
               Close
             </Button>
