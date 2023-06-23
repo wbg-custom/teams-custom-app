@@ -46,6 +46,7 @@ function GroupTabHome() {
   const [token, setToken] = useState("");
   const [isWeb, setIsWeb] = useState(false);
   const [tabContext, setTabContext] = useState({});
+  const [refresList, setRefreshList] = useState(0);
   // try {
   //   app.initialize();
   //   const context = await app.getContext();
@@ -133,7 +134,7 @@ function GroupTabHome() {
     //   // setTeamId(tabContext.team.groupId);
     //   console.log('JBR-Tabcontext:'+tabContext);
     fillData();
-  }, [teamId, channelId, token]);
+  }, [teamId, channelId, token, refresList]);
 
   function fillData() {
     if (teamId == "" || channelId == "" || token == "") return;
@@ -155,6 +156,7 @@ function GroupTabHome() {
         console.log("JBR-GetPhotoList:" + JSON.stringify(resData.value));
         setDataPhotoList(resData.value);
         setIsDataPhoto(true);
+        setRefreshList(refresList + 1);
       })
       .catch((err) => {
         setGetResponse(`Response Error: ${err}`);
@@ -247,16 +249,18 @@ function GroupTabHome() {
                 <a href={row.fileUrl} target="_blank">
                   <img className="imgBox" src={row["fileUrl"]} />
                 </a>
+                
+                <div className="tagCls">
                 {
                   row.tags?.map((subRow: string, subIndex: number) => {
                     return(
-                      <div className="tagCls">
-                        {subRow}
-                      </div>
+                      <span>
+                        {subRow},
+                      </span>
                     );
                   })
                 }
-                <div className="clearBoth"></div>
+                </div>
               </div>
             );
           })
