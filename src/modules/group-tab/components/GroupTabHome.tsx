@@ -254,9 +254,7 @@ function GroupTabHome() {
                 {
                   row.tags?.map((subRow: string, subIndex: number) => {
                     return(
-                      <span>
-                        {subRow},
-                      </span>
+                      <span>{subRow},&nbsp;</span>
                     );
                   })
                 }
