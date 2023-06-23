@@ -19,3 +19,15 @@ export interface iTabContext{
   createdBy: string;
   token: string;
 }
+
+export interface iPhotoList{
+  "@search.score": number
+  id: string
+  TeamId: string
+  ChannelId: string
+  ItemId: string
+  Name: string
+  CreatedBy: string
+  tags: string[]
+  fileUrl: string
+}
