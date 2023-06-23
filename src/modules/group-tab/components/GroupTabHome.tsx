@@ -156,7 +156,6 @@ function GroupTabHome() {
         console.log("JBR-GetPhotoList:" + JSON.stringify(resData.value));
         setDataPhotoList(resData.value);
         setIsDataPhoto(true);
-        setRefreshList(refresList + 1);
       })
       .catch((err) => {
         setGetResponse(`Response Error: ${err}`);
@@ -201,6 +200,7 @@ function GroupTabHome() {
             setResponseMessage(JSON.stringify(resData));
             setIsSending(false);
             setReloadFillData(!reloadFillData);
+            setRefreshList(refresList + 1);
           })
           .catch((err) => {
             setResponseMessage(`Response Error: ${err.message}`);
