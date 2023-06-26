@@ -9,7 +9,7 @@
 .popupBody{width: 50%; margin: auto; margin-top: 10%;background-color: white;padding: 20px;}
 .popupTitle{text-align: center;}
 .popupContent{text-align: center;padding: 10px;}
-button{margin-left: 10px !important;}
+button{margin-left: 10px !important;background-color: #5b5fc7; color: white;}
 .bgColorWhite{background-color: white !important;}
 
 .imgDiv{float: left;margin: 5px;border: solid 1px white;max-width: 250px;overflow:scroll;}

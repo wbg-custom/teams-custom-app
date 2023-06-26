@@ -5,11 +5,12 @@ import { useEffect } from 'react';
 import * as microsoftTeams from "@microsoft/teams-js";
 import { Text, Button, Card} from '@fluentui/react-components'
 import { CardBody } from 'reactstrap';
+import { iTabContext } from "../../common/models/Context";
 /**
  * The 'CaptureVideoWeb' component
  * of your app.
  */
-const CaptureVideoWeb = () => {
+const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
     //  var stream: MediaStream = null;
     useEffect(() => {
         // initializing microsoft teams sdk
