@@ -2,6 +2,7 @@ import React, { useState, useEffect, Component } from "react"; //useEffect,
 import { Text, Button, Image, Card } from "@fluentui/react-components";
 import { CardBody } from "reactstrap";
 import { SdkError, media } from "@microsoft/teams-js"; //, geoLocation
+import * as microsoftTeams from "@microsoft/teams-js";
 
 import { iTabContext } from "../../common/models/Context";
 import TestAPIs from "../../common/constants/TestAPIs";
@@ -18,7 +19,7 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
   const [capImgUpRes, setCapImgUpRes] = useState("");
   const [imgBase64, setImgBase64] = useState("");
 
-  const sendCaptureImage = () => {
+  const sendCaptureImageVideo = () => {
     if (isSendingCapt) return;
     // update state
     // send the actual request
@@ -91,6 +92,31 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
       videoProps: videoProps
     };
 
+    useEffect(() => {
+      microsoftTeams.app.initialize();
+    });
+    const defaultVideoAndImageProps: microsoftTeams.media.VideoAndImageProps = {
+      sources: [microsoftTeams.media.Source.Camera, microsoftTeams.media.Source.Gallery],
+      startMode: microsoftTeams.media.CameraStartMode.Photo,
+      ink: true,
+      cameraSwitcher: true,
+      textSticker: true,
+      enableFilter: true,
+      maxDuration: 30
+    }
+  
+    const defaultVideoAndImageMediaInput: microsoftTeams.media.MediaInputs = {
+      mediaType: microsoftTeams.media.MediaType.VideoAndImage,
+      maxMediaCount: 6,
+      videoAndImageProps: defaultVideoAndImageProps
+    }
+  
+    let videoControllerCallback: microsoftTeams.media.VideoControllerCallback = {
+      onRecordingStarted() {
+        console.log('onRecordingStarted Callback Invoked');
+      },
+    };
+
   const deviceCapabilities = () => {
     media.selectMedia(
       mediaInput,
@@ -135,8 +161,12 @@ const CaptureImgVideoWeb: React.FC<iTabContext> = (props) =>{
             <div className="flex columngap"></div>
             <Button onClick={deviceCapabilities}>Capture image or video</Button>
             <br />
-            <Image src={capturedImage} />
-            <video src={capturedVideo}></video>
+            {
+              capturedImage ? (<Image src={capturedImage} />) : (capturedVideo ? (<video src={capturedVideo}></video>) : <></>)
+            }
+            <br/>
+            <hr/>
+            <Button onClick={sendCaptureImageVideo}>Capture image or video</Button>
           </CardBody>
         </Card>
 
