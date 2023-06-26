@@ -67,7 +67,7 @@ function GroupTabHome() {
   //   console.log("JBR-app.initialize:"+JSON.stringify(err));
   // }
   useEffect(() => {
-    app.initialize();
+    app.initialize().then(() => {
     app.getContext().then((context: any) => {
       if (context.channel?.membershipType === "Private") {
         console.log("JBR-msg: this is private channel");
@@ -76,7 +76,8 @@ function GroupTabHome() {
       } else {
         console.log("JBR-msg: this is public channel");
       }
-      setTabContext(context);
+      setTabContext(JSON.stringify(context));
+      //setTabContext(context);
       console.log("JBR-Tabcontext:" + JSON.stringify(tabContext));
       if (context.app.host.clientType! === "web") {
         setIsWeb(true);
@@ -99,7 +100,7 @@ function GroupTabHome() {
 
       console.log("JBR-Tabcontext: Data set into useState");
     });
-
+    });
     // // initializing microsoft teams sdk
     // app.initialize();
     // app.getContext().then((context: any) => {
