@@ -17,34 +17,21 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
         microsoftTeams.app.initialize()
     })
 
+    //var mainMediaStream: MediaStream;
     function captureVideo() {
         navigator.mediaDevices.getUserMedia({ video: true })
             .then(mediaStream => {
                 const videoElement = document.querySelector("video");
                 videoElement!.srcObject = mediaStream;
+                videoElement?.play();
+                //mainMediaStream = mediaStream;
             }).catch(error => console.log(error));
-        // microsoftTeams.media.selectMedia({ maxMediaCount: 1, mediaType: microsoftTeams.media.MediaType.Video }, (error: microsoftTeams.SdkError, attachments: microsoftTeams.media.Media[]) => {
-        //     // If there's any error, an alert shows the error message/code
-        //     if (error) {
-        //         if (error.message) {
-        //             alert(" ErrorCode: " + error.errorCode + error.message);
-        //         } else {
-        //             alert(" ErrorCode: " + error.errorCode);
-        //         }
-        //     }
-       
-        //     if (attachments) {
-        //         // taking the first attachment  
-        //         let videoResult = attachments[0];
-       
-        //         // setting audio string which can be used in Video tag
-        //         //let videoData = "data:" + videoResult.mimeType + ";base64," + videoResult.preview;
-        //         let videoData = videoResult.mimeType + ";base64," + videoResult.preview;
-        //         const videoElement = document.querySelector("video");
-        //         videoElement!.src = videoData;
-        //     }
-        // });
     }
+    // function stopVideo(){
+    //     if(mainMediaStream){
+    //         //mainMediaStream.stop();
+    //     }
+    // }
 
     return (
         <>
