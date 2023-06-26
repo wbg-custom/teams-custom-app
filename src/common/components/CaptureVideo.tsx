@@ -82,7 +82,7 @@ const CaptureVideo: React.FC<iTabContext> = (props) =>{
             <Text>Method</Text>
             <Text>navigator.mediaDevices.getUserMedia, teams.getmedia</Text>
             <Button onClick={captureVideo}>Capture video</Button>
-          </div>          
+          </div>
           <video controls src={video} height={'300px'} width={'width: 100%'}  />          
        </CardBody>
       </Card>

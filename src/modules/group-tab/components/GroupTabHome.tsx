@@ -220,16 +220,14 @@ function GroupTabHome() {
         <div className="searchTxt55Cls">
           <Input contentAfter={<Search24Regular />} />
         </div>
-        <div className="searchBtn15Cls">
+        <div className="searchBtn40Cls">
           <Button
             icon={<Add24Regular />}
             iconPosition="before"
             appearance="primary"
             onClick={() => toggleShowUploader()}>
             Upload
-          </Button>
-        </div>
-        <div className="searchBtn25Cls">
+          </Button> <br/>
           <Button
             icon={<Add24Regular />}
             iconPosition="before"
@@ -328,13 +326,24 @@ function GroupTabHome() {
           </div>
           <hr></hr>
 
-              <CaptureVideo
+          {isWeb ? (
+                <CaptureVideo
                 channelId={channelId}
                 channelName={channelName}
                 teamId={teamId}
                 createdBy={createdBy}
                 token={token}
               />
+              ) : (
+                <CaptureImgVideoWeb
+                channelId={channelId}
+                channelName={channelName}
+                teamId={teamId}
+                createdBy={createdBy}
+                token={token}
+              />
+            )}
+              
 
             <Button appearance="outline" onClick={() => toggleShowVideoUploader()}>
               Close
