@@ -11,6 +11,7 @@ import { TeamsFxContext, iPhotoList } from "../../../common/models/Context"; //"
 import CaptureImageWeb from "../../../common/components/CaptureImageWeb";
 import CaptureImage from "../../../common/components/CaptureImage";
 import CaptureImgVideoWeb from "../../../common/components/CaptureImgVideoWeb";
+import CaptureVideoWeb from "../../../common/components/CaptureVideoWeb";
 import CaptureVideo from "../../../common/components/CaptureVideo";
 
 function GroupTabHome() {
@@ -328,7 +329,7 @@ function GroupTabHome() {
           <hr></hr>
 
           {isWeb ? (
-                <CaptureVideo
+                <CaptureVideoWeb
                 channelId={channelId}
                 channelName={channelName}
                 teamId={teamId}
@@ -336,7 +337,7 @@ function GroupTabHome() {
                 token={token}
               />
               ) : (
-                <CaptureImgVideoWeb
+                <CaptureVideo
                 channelId={channelId}
                 channelName={channelName}
                 teamId={teamId}
@@ -345,7 +346,6 @@ function GroupTabHome() {
               />
             )}
               
-
             <Button appearance="outline" onClick={() => toggleShowVideoUploader()}>
               Close
             </Button>
