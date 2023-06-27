@@ -19,13 +19,23 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
     // });
 
     const[toggleStartStop, setToggleStartStop] = useState(true);
-    const[chunks, setChunks] = useState<Blob[]>();
+    const[chunks, setChunks] = useState<Blob[]>([]);
     const[uploadB64, setUploadB64] = useState('');
     const[isUpldngVdo, setIsUpldngVdo] = useState(false);
     const[uploadMsg, setUploadMsg] = useState('');
     
 
     //let mainMediaStream: MediaRecorder;
+    const handleStopRecording = () => {
+        if (mediaRecorder) {
+            mediaRecorder.stop();
+        }
+    };
+    const handleDataAvailable = (e: BlobEvent) => {
+        if (e.data.size > 0) {
+            setChunks((prev) => [...prev, e.data]);
+        }
+    };
     const[mediaRecorder, setMediaRecorder] = useState<MediaRecorder>();
     function startVideo() {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -35,28 +45,34 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
                 videoElement?.play();
                 //mainMediaStream = mediaStream;
                 //mainMediaStream = new MediaRecorder(mediaStream);
-                setMediaRecorder(new MediaRecorder(mediaStream));
-                if(mediaRecorder){
-                mediaRecorder.ondataavailable = e => {
-                    if (e.data && e.data.size > 0) {
-                      if(chunks === undefined) setChunks([e.data]);
-                      else setChunks([...chunks, e.data]);
-                    }
-                  };
-                }
+                const mediaRecorder = new MediaRecorder(mediaStream);
+                setMediaRecorder(mediaRecorder);
+                mediaRecorder?.start();
+                mediaRecorder.addEventListener("dataavailable", handleDataAvailable);
+
+                // if(mediaRecorder){
+                // mediaRecorder.ondataavailable = e => {
+                //     if (e.data && e.data.size > 0) {
+                //       if(chunks === undefined) setChunks([e.data]);
+                //       else setChunks([...chunks, e.data]);
+                //     }
+                //   };
+                // }
                 setToggleStartStop(!toggleStartStop);
             }).catch(error => console.log(error));
     }
     function stopVideo(){
         if(mediaRecorder){
             mediaRecorder.stop();
+            const videoElement = document.querySelector("video");
+            videoElement?.pause();
             setToggleStartStop(!toggleStartStop);
             saveVideo();
         }
     }
     function saveVideo() {
         // convert saved chunks to blob
-        const blob = new Blob(chunks, {type: 'mp4'});
+        const blob = new Blob(chunks, {type: "video\/mp4"});
         // generate video url from blob
         const videoURL = window.URL.createObjectURL(blob);
         // // append videoURL to list of saved videos for rendering
