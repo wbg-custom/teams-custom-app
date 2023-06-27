@@ -41,11 +41,11 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
             }).catch(error => console.log(error));
     }
     function stopVideo(){
-        if(mainMediaStream){
+        //if(mainMediaStream){
             mainMediaStream.stop();
             setToggleStartStop(!toggleStartStop);
             saveVideo();
-        }
+        //}
     }
     function saveVideo() {
         // convert saved chunks to blob
