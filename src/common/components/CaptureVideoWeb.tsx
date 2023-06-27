@@ -23,6 +23,7 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
     const[uploadB64, setUploadB64] = useState('');
     const[isUpldngVdo, setIsUpldngVdo] = useState(false);
     const[uploadMsg, setUploadMsg] = useState('');
+    const[constMediaStream, setConstMediaStream] = useState<MediaStream>();
     
 
     //let mainMediaStream: MediaRecorder;
@@ -45,6 +46,7 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
                 videoElement?.play();
                 //mainMediaStream = mediaStream;
                 //mainMediaStream = new MediaRecorder(mediaStream);
+                setConstMediaStream(mediaStream);
                 const mediaRecorder = new MediaRecorder(mediaStream);
                 setMediaRecorder(mediaRecorder);
                 mediaRecorder?.start();
@@ -68,6 +70,9 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
             videoElement?.pause();
             setToggleStartStop(!toggleStartStop);
             saveVideo();
+            constMediaStream?.getTracks().forEach( (track) => {
+              track.stop();
+            });
         }
     }
     function saveVideo() {
