@@ -84,8 +84,8 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
         reader.readAsDataURL(blob);
         reader.onloadend = () => {
             const base64data = reader.result as string;
-            console.log("JBR-VideoB64:"+base64data);
             setUploadB64(base64data);
+            console.log("JBR-VideoB64:"+base64data);
         }
     }
 
@@ -102,7 +102,8 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
             'TeamId' : props.teamId,
             'ChannelId' : props.channelId,
             'base64': uploadB64,
-            'CreatedBy': props.createdBy
+            'CreatedBy': props.createdBy,
+            'extension': 'mp4'
           }
           try {
             fetch(TestAPIs.UploadPhotoB64Url, {
