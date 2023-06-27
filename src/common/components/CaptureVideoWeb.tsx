@@ -6,6 +6,7 @@ import { useState } from 'react';//useEffect
 import { Text, Button, Card} from '@fluentui/react-components'
 import { CardBody } from 'reactstrap';
 import { iTabContext } from "../../common/models/Context";
+import TestAPIs from "../../common/constants/TestAPIs";
 /**
  * The 'CaptureVideoWeb' component
  * of your app.
@@ -20,6 +21,8 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
     const[toggleStartStop, setToggleStartStop] = useState(true);
     const[chunks, setChunks] = useState<Blob[]>();
     const[uploadB64, setUploadB64] = useState('');
+    const[isUpldngVdo, setIsUpldngVdo] = useState(false);
+    const[uploadMsg, setUploadMsg] = useState('');
     
 
     //let mainMediaStream: MediaRecorder;
@@ -60,8 +63,55 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
         // const audios = this.state.audios.concat([audioURL]);
         // this.setState({audios});
         console.log('JBR-videoUrl:'+videoURL);
-        setUploadB64(videoURL);
-      }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+            const base64data = reader.result as string;
+            console.log("JBR-VideoB64:"+base64data);
+            setUploadB64(base64data);
+        }
+    }
+
+    const uploadCaptureVideo = () => {
+        if (isUpldngVdo) return;
+        // update state
+        // send the actual request
+        setUploadMsg("Loading...");
+        if (!uploadB64 || uploadB64 == '') {
+            setUploadMsg("Failed! First capture video.");
+        } else {
+          setIsUpldngVdo(true);
+          var data = {
+            'TeamId' : props.teamId,
+            'ChannelId' : props.channelId,
+            'base64': uploadB64,
+            'CreatedBy': props.createdBy
+          }
+          try {
+            fetch(TestAPIs.UploadPhotoB64Url, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${props.token}`,
+                "content-type": "application/json"
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => response.json())
+              .then((resData) => {
+                console.log(resData);
+                setUploadMsg(JSON.stringify(resData));
+                setIsUpldngVdo(false);
+              })
+              .catch((err) => {
+                setUploadMsg(`Response Error: ${err.message}`);
+                setIsUpldngVdo(false);
+              });
+          } catch (err: any) {
+            setUploadMsg(`Response Error: ${err.message}`);
+          }
+        }
+      };
 
     return (
         <>
@@ -80,7 +130,12 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
                         }
                         <video src="" controls>   </video>
                         {
-                            
+                            (uploadB64) ? (
+                                <>
+                                    <Button onClick={uploadCaptureVideo}>Upload Video</Button><br/>
+                                    <span>{uploadMsg}</span>
+                                </>
+                            ) : (<></>)
                         }
                     </div>
                 </CardBody>
