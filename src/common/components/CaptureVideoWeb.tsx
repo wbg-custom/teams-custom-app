@@ -22,7 +22,8 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
     const[uploadB64, setUploadB64] = useState('');
     
 
-    let mainMediaStream: MediaRecorder;
+    //let mainMediaStream: MediaRecorder;
+    const[mediaRecorder, setMediaRecorder] = useState<MediaRecorder>();
     function startVideo() {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             .then(mediaStream => {
@@ -30,22 +31,25 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
                 videoElement!.srcObject = mediaStream;
                 videoElement?.play();
                 //mainMediaStream = mediaStream;
-                mainMediaStream = new MediaRecorder(mediaStream);
-                mainMediaStream.ondataavailable = e => {
+                //mainMediaStream = new MediaRecorder(mediaStream);
+                setMediaRecorder(new MediaRecorder(mediaStream));
+                if(mediaRecorder){
+                mediaRecorder.ondataavailable = e => {
                     if (e.data && e.data.size > 0) {
                       if(chunks === undefined) setChunks([e.data]);
                       else setChunks([...chunks, e.data]);
                     }
                   };
+                }
                 setToggleStartStop(!toggleStartStop);
             }).catch(error => console.log(error));
     }
     function stopVideo(){
-        //if(mainMediaStream){
-            mainMediaStream.stop();
+        if(mediaRecorder){
+            mediaRecorder.stop();
             setToggleStartStop(!toggleStartStop);
             saveVideo();
-        //}
+        }
     }
     function saveVideo() {
         // convert saved chunks to blob
