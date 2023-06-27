@@ -77,7 +77,7 @@ const CaptureVideoWeb: React.FC<iTabContext> = (props) => {
     }
     function saveVideo() {
         // convert saved chunks to blob
-        const blob = new Blob(chunks, {type: "video\/mp4"});
+        const blob = new Blob(chunks, {type: "video/mp4"});//video\/mp4
         // generate video url from blob
         const videoURL = window.URL.createObjectURL(blob);
         // // append videoURL to list of saved videos for rendering
